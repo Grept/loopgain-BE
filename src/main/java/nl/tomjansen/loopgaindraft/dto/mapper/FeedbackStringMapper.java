@@ -5,7 +5,7 @@ import nl.tomjansen.loopgaindraft.model.feedback.FeedbackString;
 
 public class FeedbackStringMapper {
 
-    public static FeedbackStringDto toFeedbackStringDto(FeedbackString feedbackString) {
+    public static FeedbackStringDto toDto(FeedbackString feedbackString) {
         return new FeedbackStringDto()
                 .setComments(feedbackString.getComments())
                 .setMediaFile(feedbackString.getMediaFile());

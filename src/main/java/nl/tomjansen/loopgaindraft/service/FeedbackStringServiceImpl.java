@@ -14,6 +14,6 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
 
     @Override
     public FeedbackStringDto getFeedbackString(Long id) {
-        return FeedbackStringMapper.toFeedbackStringDto(repo.getById(id));
+        return FeedbackStringMapper.toDto(repo.getById(id));
     }
 }

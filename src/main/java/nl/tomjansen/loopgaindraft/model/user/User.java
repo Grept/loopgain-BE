@@ -3,10 +3,14 @@ package nl.tomjansen.loopgaindraft.model.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.tomjansen.loopgaindraft.model.project.Project;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +25,9 @@ public class User {
     private String username;
 
     private String emailadress;
+
+    @OneToMany
+    private List<Project> projectList = new ArrayList<>();
 
     private UserRoles role;
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import nl.tomjansen.loopgaindraft.model.feedback.FeedbackString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,8 +23,8 @@ public class Media {
     private MediaType mediaType;
 
     @OneToMany
-    private List<FeedbackString> feedbackStringCollection;
+    private List<FeedbackString> feedbackCollection = new ArrayList<>();
 
-    private byte[] byteArray;
+    private byte[] data;
 
 }

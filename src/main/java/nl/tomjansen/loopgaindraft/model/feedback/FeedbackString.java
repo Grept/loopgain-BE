@@ -18,7 +18,7 @@ public class FeedbackString {
     private Long id;
 
     @OneToMany
-    private List<Comment> comments = new ArrayList<Comment>();
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
     private Media mediaFile;
@@ -31,7 +31,7 @@ public class FeedbackString {
             sb
                     .append(c.getTimeStamp())
                     .append(":/n")
-                    .append(c.getComment())
+                    .append(c.getCommentText())
                     .append("/n/n");
         }
 

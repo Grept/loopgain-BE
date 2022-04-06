@@ -21,7 +21,7 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    private String comment;
+    private String commentText;
 
     private Timestamp timeStamp = new Timestamp(Instant.now().toEpochMilli());
 
