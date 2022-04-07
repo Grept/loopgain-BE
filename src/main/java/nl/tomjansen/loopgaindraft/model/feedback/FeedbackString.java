@@ -3,6 +3,7 @@ package nl.tomjansen.loopgaindraft.model.feedback;
 import lombok.Getter;
 import lombok.Setter;
 import nl.tomjansen.loopgaindraft.model.media.Media;
+import nl.tomjansen.loopgaindraft.model.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

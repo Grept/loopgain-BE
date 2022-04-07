@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import nl.tomjansen.loopgaindraft.model.feedback.Comment;
 import nl.tomjansen.loopgaindraft.model.media.Media;
+import nl.tomjansen.loopgaindraft.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,4 +20,5 @@ public class FeedbackStringDto {
     private List<Comment> comments = new ArrayList<>();
 
     private Media mediaFile;
+
 }
