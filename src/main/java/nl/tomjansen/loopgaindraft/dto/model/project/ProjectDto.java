@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import nl.tomjansen.loopgaindraft.model.media.Media;
 import nl.tomjansen.loopgaindraft.model.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,11 @@ public class ProjectDto {
 
     private String projectName;
 
+    private String director;
+
+    private String producer;
+
     private User projectOwner;
 
-    private List<Media> projectMedia;
+    private List<Media> projectMedia = new ArrayList<>();
 }

@@ -4,16 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "comments")
 @Entity
 public class Comment {
 
@@ -26,5 +24,6 @@ public class Comment {
     private Timestamp timeStamp = new Timestamp(Instant.now().toEpochMilli());
 
     @ManyToOne
+    @JoinColumn(name = "feedback_comment_id")
     private FeedbackString feedbackString;
 }

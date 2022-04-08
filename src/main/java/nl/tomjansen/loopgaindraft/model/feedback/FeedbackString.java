@@ -18,10 +18,11 @@ public class FeedbackString {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "feedbackString", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name = "media_feedback_id")
     private Media mediaFile;
 
     @Override

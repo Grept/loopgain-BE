@@ -1,20 +1,19 @@
 package nl.tomjansen.loopgaindraft.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.tomjansen.loopgaindraft.model.project.Project;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "users")
 @Entity
 public class User {
 
@@ -26,7 +25,8 @@ public class User {
 
     private String emailadress;
 
-    @OneToMany
+    @OneToMany(mappedBy = "projectOwner", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Project> projectList = new ArrayList<>();
 
     private UserRoles role;
