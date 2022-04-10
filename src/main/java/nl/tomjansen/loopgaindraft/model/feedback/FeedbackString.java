@@ -25,6 +25,10 @@ public class FeedbackString {
     @JoinColumn(name = "media_feedback_id")
     private Media mediaFile;
 
+    @ManyToOne
+    @JoinColumn(name = "reviewer_id")
+    private User reviewer;
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

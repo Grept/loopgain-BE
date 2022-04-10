@@ -16,11 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Media {
+public abstract class Media {
 
     @Id
     @GeneratedValue
     protected Long id;
+
+    @Column(unique = true)
+    private String fileName;
 
     private MediaType mediaType;
 
@@ -32,6 +35,12 @@ public class Media {
     @JsonIgnore
     private List<FeedbackString> feedbackCollection = new ArrayList<>();
 
+    @Lob
     private byte[] data;
+
+    public Media(String fileName, byte[] data) {
+        this.fileName = fileName;
+        this.data = data;
+    }
 
 }

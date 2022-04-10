@@ -3,7 +3,7 @@ package nl.tomjansen.loopgaindraft.dto.mapper;
 import nl.tomjansen.loopgaindraft.dto.model.user.UserDto;
 import nl.tomjansen.loopgaindraft.model.user.User;
 
-public class UserMapper {
+public abstract class UserMapper {
 
     public static UserDto toDto(User user) {
         return new UserDto()

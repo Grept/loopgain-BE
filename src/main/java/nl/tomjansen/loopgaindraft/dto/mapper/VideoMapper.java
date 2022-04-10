@@ -1,4 +1,15 @@
 package nl.tomjansen.loopgaindraft.dto.mapper;
 
-public class VideoMapper {
+import nl.tomjansen.loopgaindraft.dto.model.media.VideoDto;
+import nl.tomjansen.loopgaindraft.model.media.Video;
+import org.springframework.web.multipart.MultipartFile;
+
+public abstract class VideoMapper {
+
+    public static VideoDto entityToDto(Video video) {
+        return new VideoDto()
+                .setFileName(video.getFileName())
+                .setMediaType(video.getMediaType())
+                .setData(video.getData());
+    }
 }

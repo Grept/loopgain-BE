@@ -1,0 +1,5 @@
+
+Vragen:
+-   Is het een goed idee om mijn User model te extenden met UserDetails?
+    (antwoord lijkt NEE te zijn).
+-

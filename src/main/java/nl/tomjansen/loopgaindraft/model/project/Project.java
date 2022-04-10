@@ -35,6 +35,6 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Media> projectMedia = new ArrayList<>();
+    private List<Media> media = new ArrayList<>();
 
 }

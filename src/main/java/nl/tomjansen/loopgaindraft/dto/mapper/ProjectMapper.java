@@ -3,9 +3,8 @@ package nl.tomjansen.loopgaindraft.dto.mapper;
 import nl.tomjansen.loopgaindraft.controller.request.ProjectRequest;
 import nl.tomjansen.loopgaindraft.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgaindraft.model.project.Project;
-import nl.tomjansen.loopgaindraft.model.user.User;
 
-public class ProjectMapper {
+public abstract class ProjectMapper {
 
     public static ProjectDto entityToDto(Project project) {
         return new ProjectDto()
@@ -13,7 +12,7 @@ public class ProjectMapper {
                 .setDirector(project.getDirector())
                 .setProducer(project.getProducer())
                 .setProjectOwner(project.getProjectOwner())
-                .setProjectMedia(project.getProjectMedia());
+                .setProjectMedia(project.getMedia());
     }
 
     public static ProjectDto requestToDto(ProjectRequest projectRequest) {

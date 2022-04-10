@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.tomjansen.loopgaindraft.model.feedback.FeedbackString;
 import nl.tomjansen.loopgaindraft.model.project.Project;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +26,11 @@ public class User {
     private String username;
 
     private String emailadress;
+
+    private String password;
+
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
+    private List<FeedbackString> feedbackStrings;
 
     @OneToMany(mappedBy = "projectOwner", cascade = CascadeType.ALL)
     @JsonIgnore
