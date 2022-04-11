@@ -1,4 +1,4 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.media;
 
 import nl.tomjansen.loopgaindraft.repository.media.AudioRepository;
 import nl.tomjansen.loopgaindraft.repository.media.VideoRepository;

@@ -1,9 +1,9 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
-import nl.tomjansen.loopgaindraft.controller.request.VideoRequest;
-import nl.tomjansen.loopgaindraft.service.VideoService;
+import nl.tomjansen.loopgaindraft.service.media.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,10 @@ public class VideoController {
 
     @GetMapping("/media/{name}")
     public ResponseEntity<Object> getVideo(@PathVariable String name) {
-        return new ResponseEntity<>(new ByteArrayResource(videoService.getVideo(name).getData()), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(MediaType.IMAGE_JPEG_VALUE));
+
+        return new ResponseEntity<>(new ByteArrayResource(videoService.getVideo(name).getData()), headers, HttpStatus.OK);
     }
 
 }

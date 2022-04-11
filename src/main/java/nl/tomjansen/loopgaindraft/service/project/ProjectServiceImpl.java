@@ -1,6 +1,5 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.project;
 
-import nl.tomjansen.loopgaindraft.controller.request.ProjectRequest;
 import nl.tomjansen.loopgaindraft.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgaindraft.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgaindraft.exception.RecordNotFoundException;
@@ -11,7 +10,6 @@ import nl.tomjansen.loopgaindraft.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

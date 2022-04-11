@@ -36,6 +36,7 @@ public abstract class Media {
     private List<FeedbackString> feedbackCollection = new ArrayList<>();
 
     @Lob
+//    @Column(columnDefinition = "BLOB")
     private byte[] data;
 
     public Media(String fileName, byte[] data) {

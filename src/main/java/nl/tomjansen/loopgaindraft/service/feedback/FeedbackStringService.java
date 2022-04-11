@@ -1,4 +1,4 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.feedback;
 
 import nl.tomjansen.loopgaindraft.dto.model.feedback.FeedbackStringDto;
 

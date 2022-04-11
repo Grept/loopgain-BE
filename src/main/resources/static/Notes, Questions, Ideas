@@ -1,5 +1,14 @@
+Huidige probleem:
+-   Files kunnen worden geupload. Get-request werkt ook. Er mist alleen een mime-type
+
 
 Vragen:
 -   Is het een goed idee om mijn User model te extenden met UserDetails?
     (antwoord lijkt NEE te zijn).
 -
+
+Notes:
+-   FeedbackString zou eigenlijk ook een User field moeten krijgen; er is iemand eigenaar van de feedbackstring
+    naast het feit dat de string zelf onderdeel is van een Media-file.
+-   Aan de video/media-ServiceImpl class de annotatie @Transactional toegevoegd. Dit lost een probleem op waarbij een
+    error met de boodschap "Unable to acces lob stream" gegeven werd na een GET-request.

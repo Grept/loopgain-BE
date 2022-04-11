@@ -1,6 +1,6 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
-import nl.tomjansen.loopgaindraft.service.FeedbackStringService;
+import nl.tomjansen.loopgaindraft.service.feedback.FeedbackStringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

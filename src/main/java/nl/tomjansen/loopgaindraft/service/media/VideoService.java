@@ -1,4 +1,4 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.media;
 
 import nl.tomjansen.loopgaindraft.dto.model.media.VideoDto;
 import nl.tomjansen.loopgaindraft.model.media.Video;

@@ -1,4 +1,4 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.media;
 
 import nl.tomjansen.loopgaindraft.dto.mapper.VideoMapper;
 import nl.tomjansen.loopgaindraft.dto.model.media.VideoDto;
@@ -8,12 +8,14 @@ import nl.tomjansen.loopgaindraft.model.media.Video;
 import nl.tomjansen.loopgaindraft.repository.media.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
 @Service
+@Transactional
 public class VideoServiceImpl implements VideoService{
 
     @Autowired

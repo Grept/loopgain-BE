@@ -1,4 +1,4 @@
-package nl.tomjansen.loopgaindraft.service;
+package nl.tomjansen.loopgaindraft.service.user;
 
 import nl.tomjansen.loopgaindraft.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgaindraft.model.user.User;
