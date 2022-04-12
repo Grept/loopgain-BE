@@ -12,7 +12,6 @@ import org.springframework.content.commons.annotations.ContentLength;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter

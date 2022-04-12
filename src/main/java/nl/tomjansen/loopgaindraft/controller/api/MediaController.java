@@ -13,21 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
+
 
 @RestController
+@RequestMapping(value = "/projects")
 public class MediaController {
 
     @Autowired private MediaRepository mediaRepository;
     @Autowired private MediaServiceImpl mediaService;
 
     // POST ONE MEDIA FILE
-    @RequestMapping(value = "/projects/media", method = RequestMethod.POST)
+    @RequestMapping(value = "/media", method = RequestMethod.POST)
     public ResponseEntity<Object> saveMedia(
             @RequestParam String fileName,
-            @RequestParam MultipartFile file
-//            ,@PathVariable Long projectId
-        )
+            @RequestParam MultipartFile file)
             throws IOException {
 
         if (mediaRepository.existsByFileName(fileName)) {
@@ -39,7 +38,7 @@ public class MediaController {
     }
 
     // GET ONE FILE
-    @RequestMapping(value = "/projects/media/{mediaId}")
+    @RequestMapping(value = "/media/{mediaId}")
     public ResponseEntity<Object> getMedia(@PathVariable Long mediaId) {
         MediaDto mediaDto = mediaService.getMedia(mediaId);
         HttpHeaders headers = new HttpHeaders();
@@ -48,5 +47,20 @@ public class MediaController {
         headers.set("File-Name", mediaDto.getFileName());
 
         return new ResponseEntity<>(mediaDto.getInputStreamResource(), headers, HttpStatus.OK);
+    }
+
+    // LIST ALL FILENAMES
+    @RequestMapping(value = "/media")
+    public ResponseEntity<Object> listAllMedia() {
+        return new ResponseEntity<>(mediaService.listAllMedia(), HttpStatus.OK);
+    }
+
+    // DELETE MEDIA FILE
+    @RequestMapping(value = "/media/{mediaId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteMediaFile(@PathVariable Long mediaId) {
+
+        mediaService.deleteFile(mediaId);
+
+        return new ResponseEntity<>("Media file deleted.", HttpStatus.OK);
     }
 }

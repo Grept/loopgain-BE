@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Long saveMedia(String fileName, MultipartFile file) throws IOException {
+
         Media media = MediaMapper.mpfToEntity(fileName, file);
 
         contentStore.setContent(media, file.getInputStream());
@@ -37,6 +40,28 @@ public class MediaServiceImpl implements MediaService {
         Optional<Media> m = mediaRepository.findById(id);
         if(m.isPresent()) {
             return MediaMapper.entityToDto(m.get(), new InputStreamResource(contentStore.getContent(m.get())));
+        } else {
+            throw new RecordNotFoundException("Media file not found.");
+        }
+    }
+
+    @Override
+    public List<String> listAllMedia() {
+        List<Media> mediaList = mediaRepository.findAll();
+        List<String> mediaNameList = new ArrayList<>();
+
+        for (Media m : mediaList) {
+            mediaNameList.add(m.getFileName());
+        }
+
+        return mediaNameList;
+    }
+
+    @Override
+    public void deleteFile(Long mediaId) {
+        Optional<Media> mediaFile = mediaRepository.findById(mediaId);
+        if(mediaFile.isPresent()) {
+            mediaRepository.delete(mediaFile.get());
         } else {
             throw new RecordNotFoundException("Media file not found.");
         }
