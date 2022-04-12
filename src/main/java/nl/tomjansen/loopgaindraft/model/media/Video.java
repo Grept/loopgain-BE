@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 public class Video extends Media {
 
-    public Video(String fileName, byte[] data) {
-        super(fileName, data);
-    }
+//    public Video(String fileName, byte[] data) {
+//        super(fileName, data);
+//    }
 
 }

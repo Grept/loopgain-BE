@@ -6,9 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.tomjansen.loopgaindraft.model.feedback.FeedbackString;
 import nl.tomjansen.loopgaindraft.model.project.Project;
+import org.springframework.content.commons.annotations.ContentId;
+import org.springframework.content.commons.annotations.ContentLength;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Media {
+public class Media {
 
     @Id
     @GeneratedValue
@@ -25,7 +29,7 @@ public abstract class Media {
     @Column(unique = true)
     private String fileName;
 
-    private MediaType mediaType;
+    private LocalDate creationDate = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "project_media_id")
@@ -35,13 +39,15 @@ public abstract class Media {
     @JsonIgnore
     private List<FeedbackString> feedbackCollection = new ArrayList<>();
 
-    @Lob
-//    @Column(columnDefinition = "BLOB")
-    private byte[] data;
+//    @Lob
+//    private byte[] data;
 
-    public Media(String fileName, byte[] data) {
-        this.fileName = fileName;
-        this.data = data;
-    }
+    @ContentId
+    private String contentId;
+
+    @ContentLength
+    private long contentLength;
+
+    private String contentMimeType = "";
 
 }

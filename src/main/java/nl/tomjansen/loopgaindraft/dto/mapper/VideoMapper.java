@@ -8,8 +8,6 @@ public abstract class VideoMapper {
 
     public static VideoDto entityToDto(Video video) {
         return new VideoDto()
-                .setFileName(video.getFileName())
-                .setMediaType(video.getMediaType())
-                .setData(video.getData());
+                .setFileName(video.getFileName());
     }
 }

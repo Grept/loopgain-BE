@@ -5,7 +5,11 @@ Huidige probleem:
 Vragen:
 -   Is het een goed idee om mijn User model te extenden met UserDetails?
     (antwoord lijkt NEE te zijn).
--
+-   Ik wil multipart-file extenden (of implementen) zodat ik een request class kan maken. Eigenlijk wil ik vooral
+    de lombok annotatie @Accessor(chain = true) toevoegen aan MultipartFile.
+    Mijn probleem is dat MultipartFile een interface is die door SB wordt geimplementeerd.
+    Als ik de interface zelf implementeer moet ik alle methodes zelf uitschrijven. Hier loop ik vast.
+    Is het mogelijk om een annotatie toe te voegen aan de interface MultipartFile?
 
 Notes:
 -   FeedbackString zou eigenlijk ook een User field moeten krijgen; er is iemand eigenaar van de feedbackstring
