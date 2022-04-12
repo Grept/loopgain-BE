@@ -11,6 +11,7 @@ import org.springframework.content.commons.annotations.ContentLength;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Media {
     @Column(unique = true)
     private String fileName;
 
-    private LocalDate creationDate = LocalDate.now();
+    private LocalDateTime creationDateTime = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "project_media_id")

@@ -29,7 +29,7 @@ public abstract class MediaMapper {
 
         return new MediaDto()
                 .setFileName(media.getFileName())
-                .setCreationDate(media.getCreationDate())
+                .setCreationDateTime(media.getCreationDateTime())
                 .setContentMimeType(media.getContentMimeType())
                 .setContentId(media.getContentId())
                 .setContentLength(media.getContentLength())

@@ -9,6 +9,7 @@ import org.springframework.core.io.InputStreamResource;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class MediaDto {
     private String fileName;
-    private LocalDate creationDate;
+    private LocalDateTime creationDateTime;
     private String contentId;
     private long contentLength;
     private String contentMimeType;

@@ -29,6 +29,7 @@ public class MediaController {
             @RequestParam MultipartFile file)
             throws IOException {
 
+        // TO DO: move this check to the service layer.
         if (mediaRepository.existsByFileName(fileName)) {
             throw new MediaAlreadyExistsException();
         } else {
