@@ -17,8 +17,9 @@ import java.util.List;
 @Accessors(chain = true)
 public class FeedbackStringDto {
 
-    private List<Comment> comments = new ArrayList<>();
+    private List<CommentDto> commentList;
 
     private Media mediaFile;
+
 
 }

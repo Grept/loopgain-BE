@@ -26,4 +26,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "feedback_comment_id")
     private FeedbackString feedbackString;
+
+    public Comment(String commentText) {
+        this.commentText = commentText;
+    }
 }

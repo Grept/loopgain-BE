@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 @RestController
-@RequestMapping(value = "/projects")
+@RequestMapping(value = "/projects/{projectId}")
 public class MediaController {
 
     @Autowired private MediaRepository mediaRepository;

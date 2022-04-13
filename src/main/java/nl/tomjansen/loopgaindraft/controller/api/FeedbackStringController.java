@@ -1,21 +1,43 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
+import nl.tomjansen.loopgaindraft.dto.model.feedback.FeedbackStringDto;
+import nl.tomjansen.loopgaindraft.repository.feedback.FeedbackStringRepository;
 import nl.tomjansen.loopgaindraft.service.feedback.FeedbackStringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FeedbackStringController {
 
     @Autowired
-    public FeedbackStringService service;
+    private FeedbackStringService feedbackStringService;
+//    @Autowired
+//    private FeedbackStringRepository feedbackStringRepository;
 
-    @GetMapping("/feedback/{fbsId}")
-    public ResponseEntity<?> retrieveFeedbackString(@PathVariable Long fbsId) {
-        return new ResponseEntity<>(service.getFeedbackString(fbsId), HttpStatus.OK);
+    @GetMapping("/feedback/{feedbackStringId}")
+    public ResponseEntity<Object> getFeedbackString(@PathVariable Long feedbackStringId) {
+
+        FeedbackStringDto feedbackStringDto = feedbackStringService.getFeedbackString(feedbackStringId);
+
+        return new ResponseEntity<>(feedbackStringDto, HttpStatus.OK);
+
+//        return new ResponseEntity<>(feedbackStringRepository.getById(feedbackStringId), HttpStatus.OK);
+    }
+
+    @PostMapping("/feedback")
+    public ResponseEntity<Object> createFeedbackString() {
+        Long feedbackStringId = feedbackStringService.createFeedbackString();
+
+        return new ResponseEntity<>("Created feedback string with ID: " + feedbackStringId,
+                HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/feedback/{feedbackStringId}")
+    public ResponseEntity<Object> deleteFeedbackString(@PathVariable Long feedbackStringId) {
+        return new ResponseEntity<>("Deleted feedbackString with ID: " +
+                feedbackStringService.deleteFeedbackString(feedbackStringId),
+                HttpStatus.OK);
     }
 }

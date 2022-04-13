@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.model.feedback;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import nl.tomjansen.loopgaindraft.model.media.Media;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name = "feedback_collection")
 public class FeedbackString {
 
     @Id
@@ -19,7 +21,8 @@ public class FeedbackString {
     private Long id;
 
     @OneToMany(mappedBy = "feedbackString", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+    @JsonIgnore
+    private List<Comment> commentsList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "media_feedback_id")
@@ -33,7 +36,7 @@ public class FeedbackString {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for(Comment c : comments) {
+        for(Comment c : commentsList) {
             sb
                     .append(c.getTimeStamp())
                     .append(":/n")
@@ -42,5 +45,9 @@ public class FeedbackString {
         }
 
         return sb.toString();
+    }
+
+    public void addComment(Comment comment) {
+        this.commentsList.add(comment);
     }
 }
