@@ -29,8 +29,8 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
-    private List<FeedbackString> feedbackStrings;
+//    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
+//    private List<FeedbackString> feedbackStrings;
 
     @OneToMany(mappedBy = "projectOwner", cascade = CascadeType.ALL)
     @JsonIgnore

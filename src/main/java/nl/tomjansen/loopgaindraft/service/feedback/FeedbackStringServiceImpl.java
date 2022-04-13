@@ -37,9 +37,8 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
         Optional<Media> mediaOptional = mediaRepository.findById(mediaId);
 
         if(mediaOptional.isPresent()) {
-            Media media = mediaOptional.get();
             FeedbackString feedbackString = new FeedbackString();
-            feedbackString.setMediaFile(media);
+            feedbackString.setMediaFile(mediaOptional.get());
             return feedbackStringRepository.save(feedbackString).getId();
         } else {
             throw new RecordNotFoundException(String.format("Mediafile with ID: %d was not found.", mediaId));

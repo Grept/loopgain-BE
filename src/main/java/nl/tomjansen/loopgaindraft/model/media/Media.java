@@ -39,9 +39,6 @@ public class Media {
     @JsonIgnore
     private List<FeedbackString> feedbackCollection = new ArrayList<>();
 
-//    @Lob
-//    private byte[] data;
-
     @ContentId
     private String contentId;
 

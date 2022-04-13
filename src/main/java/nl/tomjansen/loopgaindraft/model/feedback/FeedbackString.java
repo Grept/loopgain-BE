@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "feedback_collection")
+@Table(name = "feedbackString")
 public class FeedbackString {
 
     @Id
@@ -28,26 +28,26 @@ public class FeedbackString {
     @JoinColumn(name = "media_feedback_id")
     private Media mediaFile;
 
-    @ManyToOne
-    @JoinColumn(name = "reviewer_id")
-    private User reviewer;
+//    @ManyToOne
+//    @JoinColumn(name = "reviewer_id")
+//    private User reviewer;
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//
+//        for(Comment c : commentsList) {
+//            sb
+//                    .append(c.getTimeStamp())
+//                    .append(":/n")
+//                    .append(c.getCommentText())
+//                    .append("/n/n");
+//        }
+//
+//        return sb.toString();
+//    }
 
-        for(Comment c : commentsList) {
-            sb
-                    .append(c.getTimeStamp())
-                    .append(":/n")
-                    .append(c.getCommentText())
-                    .append("/n/n");
-        }
-
-        return sb.toString();
-    }
-
-    public void addComment(Comment comment) {
-        this.commentsList.add(comment);
-    }
+//    public void addComment(Comment comment) {
+//        this.commentsList.add(comment);
+//    }
 }
