@@ -13,8 +13,6 @@ public class FeedbackStringController {
 
     @Autowired
     private FeedbackStringService feedbackStringService;
-//    @Autowired
-//    private FeedbackStringRepository feedbackStringRepository;
 
     @GetMapping("/feedback/{feedbackStringId}")
     public ResponseEntity<Object> getFeedbackString(@PathVariable Long feedbackStringId) {
@@ -22,13 +20,11 @@ public class FeedbackStringController {
         FeedbackStringDto feedbackStringDto = feedbackStringService.getFeedbackString(feedbackStringId);
 
         return new ResponseEntity<>(feedbackStringDto, HttpStatus.OK);
-
-//        return new ResponseEntity<>(feedbackStringRepository.getById(feedbackStringId), HttpStatus.OK);
     }
 
-    @PostMapping("/feedback")
-    public ResponseEntity<Object> createFeedbackString() {
-        Long feedbackStringId = feedbackStringService.createFeedbackString();
+    @PostMapping("/media/{mediaId}/feedback")
+    public ResponseEntity<Object> createFeedbackString(@PathVariable Long mediaId) {
+        Long feedbackStringId = feedbackStringService.createFeedbackString(mediaId);
 
         return new ResponseEntity<>("Created feedback string with ID: " + feedbackStringId,
                 HttpStatus.CREATED);
