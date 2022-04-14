@@ -14,23 +14,22 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping(value = "/user")
 public class ProjectController {
 
     @Autowired
     ProjectService projectService;
 
     @GetMapping("/projects")
-    public ResponseEntity<?> getAllProjects() {
-        return new ResponseEntity<>("getAllProjects()", HttpStatus.OK);
+    public ResponseEntity<Object> getAllProjects() {
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
 
-    @GetMapping("/projects/{id}")
-    public ResponseEntity<?> getProject() {
-        return new ResponseEntity<>("getProject()", HttpStatus.OK);
+    @GetMapping("/projects/{projectId}")
+    public ResponseEntity<Object> getProject(@PathVariable Long projectId) {
+        return new ResponseEntity<>(projectService.getProject(projectId), HttpStatus.OK);
     }
 
-
-    // ADD a project to the db.
     @PostMapping("/projects")
     public ResponseEntity<Object> createProject(@Valid @RequestBody ProjectRequest projectRequest, BindingResult br) {
         if(br.hasErrors()) {
@@ -42,8 +41,7 @@ public class ProjectController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        ProjectDto projectDto = ProjectMapper.requestToDto(projectRequest);
-        Long projectId = projectService.postProject(projectDto);
+        Long projectId = projectService.postProject(ProjectMapper.requestToDto(projectRequest));
 
         return new ResponseEntity<>("Project created with ID#: " + projectId, HttpStatus.CREATED);
     }

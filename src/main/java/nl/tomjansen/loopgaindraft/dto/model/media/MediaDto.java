@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class MediaDto {
+    private Long id;
     private String fileName;
     private LocalDateTime creationDateTime;
     private String contentId;

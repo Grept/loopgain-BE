@@ -25,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     // GET ALL
     @Override
-    public List<ProjectDto> getAllProjects(User user) {
-        List<Project> projectList = userRepository.getById(user.getId()).getProjectList();
+    public List<ProjectDto> getAllProjects() {
+        List<Project> projectList = projectRepository.findAll();
         List<ProjectDto> projectDtoList = new ArrayList<>();
 
         for(Project p : projectList) {
@@ -41,9 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto getProject(Long id) {
 
-        Optional<Project> project = projectRepository.findById(id);
-        if(project.isPresent()) {
-            return ProjectMapper.entityToDto(project.get());
+        Optional<Project> projectOptional = projectRepository.findById(id);
+        if(projectOptional.isPresent()) {
+            return ProjectMapper.entityToDto(projectOptional.get());
         } else {
             throw new RecordNotFoundException(String.format("Project with ID#: %d not found", id));
         }
@@ -63,14 +63,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     // PUT ONE
     @Override
-    public ProjectDto updateProject(ProjectDto dto) {
+    public ProjectDto updateProject(ProjectDto dto, Long projectId) {
         return null;
     }
 
 
     // DELETE ONE
     @Override
-    public Long deleteProject(ProjectDto dto) {
+    public Long deleteProject(Long projectId) {
         return null;
     }
 }

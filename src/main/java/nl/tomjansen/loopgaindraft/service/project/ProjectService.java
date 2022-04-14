@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ProjectService {
 
-    public List<ProjectDto> getAllProjects(User user);
+    public List<ProjectDto> getAllProjects();
 
     public ProjectDto getProject(Long id);
 
     public Long postProject(ProjectDto dto);
 
-    public ProjectDto updateProject(ProjectDto dto);
+    public ProjectDto updateProject(ProjectDto dto, Long projectId);
 
-    public Long deleteProject(ProjectDto dto);
+    public Long deleteProject(Long projectId);
 }

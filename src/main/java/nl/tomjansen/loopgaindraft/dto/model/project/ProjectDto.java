@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class ProjectDto {
+    private Long id;
 
     private String projectName;
 

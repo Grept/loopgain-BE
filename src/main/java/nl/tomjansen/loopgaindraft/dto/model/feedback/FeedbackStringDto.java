@@ -16,10 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class FeedbackStringDto {
-
+    private Long id;
     private List<CommentDto> commentList;
-
     private Media mediaFile;
-
-
 }

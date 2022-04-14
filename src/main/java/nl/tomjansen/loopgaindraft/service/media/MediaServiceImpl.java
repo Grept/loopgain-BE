@@ -2,10 +2,13 @@ package nl.tomjansen.loopgaindraft.service.media;
 
 import nl.tomjansen.loopgaindraft.dto.mapper.MediaMapper;
 import nl.tomjansen.loopgaindraft.dto.model.media.MediaDto;
+import nl.tomjansen.loopgaindraft.exception.MediaAlreadyExistsException;
 import nl.tomjansen.loopgaindraft.exception.RecordNotFoundException;
 import nl.tomjansen.loopgaindraft.model.media.Media;
+import nl.tomjansen.loopgaindraft.model.project.Project;
 import nl.tomjansen.loopgaindraft.repository.media.MediaContentStore;
 import nl.tomjansen.loopgaindraft.repository.media.MediaRepository;
+import nl.tomjansen.loopgaindraft.repository.project.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
@@ -20,19 +23,31 @@ import java.util.Optional;
 public class MediaServiceImpl implements MediaService {
 
     @Autowired
+    ProjectRepository projectRepository;
+
+    @Autowired
     MediaRepository mediaRepository;
 
     @Autowired
     MediaContentStore contentStore;
 
     @Override
-    public Long saveMedia(String fileName, MultipartFile file) throws IOException {
+    public Long saveMedia(String fileName, MultipartFile file, Long projectId) throws IOException {
 
-        Media media = MediaMapper.mpfToEntity(fileName, file);
+        Optional<Project> projectOptional = projectRepository.findById(projectId);
 
-        contentStore.setContent(media, file.getInputStream());
+        if(projectOptional.isPresent()) {
+            if (mediaRepository.existsByFileName(fileName)) {
+                throw new MediaAlreadyExistsException();
+            }
 
-        return mediaRepository.save(media).getId();
+            Media media = MediaMapper.mpfToEntity(fileName, file);
+            media.setProject(projectOptional.get());
+            contentStore.setContent(media, file.getInputStream());
+            return mediaRepository.save(media).getId();
+        } else {
+            throw new RecordNotFoundException(String.format("Project with ID: %d was not found.", projectId));
+        }
     }
 
     @Override

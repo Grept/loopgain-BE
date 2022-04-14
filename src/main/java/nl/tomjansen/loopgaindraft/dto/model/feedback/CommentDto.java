@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @Setter
 @Accessors(chain = true)
 public class CommentDto implements Serializable {
+    private Long id;
     private String commentText;
     private Timestamp timeStamp;
 }

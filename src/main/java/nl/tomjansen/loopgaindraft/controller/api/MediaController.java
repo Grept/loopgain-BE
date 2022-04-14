@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 @RestController
-//@RequestMapping(value = "/projects/{projectId}")
+@RequestMapping(value = "/user/projects/{projectId}")
 public class MediaController {
 
     @Autowired private MediaRepository mediaRepository;
@@ -26,16 +26,13 @@ public class MediaController {
     @RequestMapping(value = "/media", method = RequestMethod.POST)
     public ResponseEntity<Object> saveMedia(
             @RequestParam String fileName,
-            @RequestParam MultipartFile file)
+            @RequestParam MultipartFile file,
+            @PathVariable Long projectId)
             throws IOException {
 
-        // TO DO: move this check to the service layer.
-        if (mediaRepository.existsByFileName(fileName)) {
-            throw new MediaAlreadyExistsException();
-        } else {
-            Long id = mediaService.saveMedia(fileName, file);
+            Long id = mediaService.saveMedia(fileName, file, projectId);
             return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
-        }
+
     }
 
     // GET ONE FILE
