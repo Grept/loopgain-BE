@@ -11,6 +11,7 @@ public abstract class CommentMapper {
 
     public static CommentDto entityToDto(Comment entity) {
         return new CommentDto()
+                .setId(entity.getId())
                 .setCommentText(entity.getCommentText())
                 .setTimeStamp(entity.getTimeStamp());
     }

@@ -18,6 +18,7 @@ public abstract class FeedbackStringMapper {
         }
 
         return new FeedbackStringDto()
+                .setId(feedbackString.getId())
                 .setCommentList(commentDtoList)
                 .setMediaFile(feedbackString.getMediaFile());
     }

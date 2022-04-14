@@ -25,8 +25,7 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
     public FeedbackStringDto getFeedbackString(Long id) {
         Optional<FeedbackString> feedbackStringOptional = feedbackStringRepository.findById(id);
         if(feedbackStringOptional.isPresent()) {
-            FeedbackStringDto feedbackStringDto = FeedbackStringMapper.entityToDto(feedbackStringOptional.get());
-            return feedbackStringDto;
+            return FeedbackStringMapper.entityToDto(feedbackStringOptional.get());
         } else {
             throw new RecordNotFoundException(String.format("FeedbackString with ID: %d was not found", id));
         }

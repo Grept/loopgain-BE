@@ -18,7 +18,7 @@ public abstract class MediaMapper {
         return mediaFile;
     }
 
-    public static MediaDto entityToDto(Media media, InputStreamResource inputStreamResource) {
+    public static MediaDto entityToDto(Media entity, InputStreamResource inputStreamResource) {
 
         // inputStreamResource wordt hier als argument meegegeven aan de methode in plaats van opgehaald via het
         // media object. De inputStreamResource wordt opgebouwd met behulp van de contentStore.
@@ -28,11 +28,12 @@ public abstract class MediaMapper {
         // de inputStreamResource mee als argument, dan hoeven we geen contentStore te Autowiren.
 
         return new MediaDto()
-                .setFileName(media.getFileName())
-                .setCreationDateTime(media.getCreationDateTime())
-                .setContentMimeType(media.getContentMimeType())
-                .setContentId(media.getContentId())
-                .setContentLength(media.getContentLength())
+                .setId(entity.getId())
+                .setFileName(entity.getFileName())
+                .setCreationDateTime(entity.getCreationDateTime())
+                .setContentMimeType(entity.getContentMimeType())
+                .setContentId(entity.getContentId())
+                .setContentLength(entity.getContentLength())
                 .setInputStreamResource(inputStreamResource);
 
     }
