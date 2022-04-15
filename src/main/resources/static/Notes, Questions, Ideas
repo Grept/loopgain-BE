@@ -16,3 +16,8 @@ Notes:
     naast het feit dat de string zelf onderdeel is van een Media-file.
 -   Aan de video/media-ServiceImpl class de annotatie @Transactional toegevoegd. Dit lost een probleem op waarbij een
     error met de boodschap "Unable to acces lob stream" gegeven werd na een GET-request.
+-   Alle DTO's hebben ook een id veld gekregen. Dit is toch wel handig om naar de front-end te communiceren omdat
+    veel data opgehaald wordt op basis van een id. De FE moet daar dan mee kunnen werken.
+-   Alle @Autowired DI moet omgeschreven worden naar constructor injection. Alle DI velden kunnen dan private final
+    gemaakt worden. Dit is best practice. Gebruik Lombok om een @RequiredArgsConstructor toe te voegen aan de klasse;
+    dan ziet de code er nog clean uit ook. 

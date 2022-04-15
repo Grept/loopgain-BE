@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.model.media.MediaDto;
 import nl.tomjansen.loopgaindraft.exception.MediaAlreadyExistsException;
 import nl.tomjansen.loopgaindraft.repository.media.MediaRepository;
@@ -16,11 +17,13 @@ import java.io.IOException;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/user/projects/{projectId}")
 public class MediaController {
 
-    @Autowired private MediaRepository mediaRepository;
-    @Autowired private MediaServiceImpl mediaService;
+    // Dependency Injection via @RequiredArgsConstructor
+    private final MediaRepository mediaRepository;
+    private final MediaService mediaService;
 
     // POST ONE MEDIA FILE
     @RequestMapping(value = "/media", method = RequestMethod.POST)

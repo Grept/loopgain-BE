@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.controller.request.ProjectRequest;
 import nl.tomjansen.loopgaindraft.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgaindraft.dto.model.project.ProjectDto;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/user")
 public class ProjectController {
 
-    @Autowired
-    ProjectService projectService;
+    // Dependency Injection via @RequiredArgsConstructor
+    private final ProjectService projectService;
 
     @GetMapping("/projects")
     public ResponseEntity<Object> getAllProjects() {

@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.service.media;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.mapper.MediaMapper;
 import nl.tomjansen.loopgaindraft.dto.model.media.MediaDto;
 import nl.tomjansen.loopgaindraft.exception.MediaAlreadyExistsException;
@@ -20,16 +21,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MediaServiceImpl implements MediaService {
 
-    @Autowired
-    ProjectRepository projectRepository;
-
-    @Autowired
-    MediaRepository mediaRepository;
-
-    @Autowired
-    MediaContentStore contentStore;
+    private final ProjectRepository projectRepository;
+    private final MediaRepository mediaRepository;
+    private final MediaContentStore contentStore;
 
     @Override
     public Long saveMedia(String fileName, MultipartFile file, Long projectId) throws IOException {

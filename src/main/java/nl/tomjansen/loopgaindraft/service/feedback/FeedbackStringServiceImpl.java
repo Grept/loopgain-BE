@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.service.feedback;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.mapper.FeedbackStringMapper;
 import nl.tomjansen.loopgaindraft.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgaindraft.exception.RecordNotFoundException;
@@ -13,13 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FeedbackStringServiceImpl implements FeedbackStringService{
 
-    @Autowired
-    private FeedbackStringRepository feedbackStringRepository;
-
-    @Autowired
-    private MediaRepository mediaRepository;
+    private final FeedbackStringRepository feedbackStringRepository;
+    private final MediaRepository mediaRepository;
 
     @Override
     public FeedbackStringDto getFeedbackString(Long id) {

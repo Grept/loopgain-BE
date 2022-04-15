@@ -1,18 +1,18 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgaindraft.service.feedback.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/feedback/{feedbackStringId}")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @PostMapping("/comment")
     public ResponseEntity<Object> saveComment(@RequestBody CommentDto commentDto, @PathVariable Long feedbackStringId) {

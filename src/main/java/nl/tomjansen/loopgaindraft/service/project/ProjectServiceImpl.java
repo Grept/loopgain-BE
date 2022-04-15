@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.service.project;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgaindraft.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgaindraft.exception.RecordNotFoundException;
@@ -15,12 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    @Autowired
-    ProjectRepository projectRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
 
     // GET ALL

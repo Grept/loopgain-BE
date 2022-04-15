@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgaindraft.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgaindraft.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgaindraft.repository.feedback.FeedbackStringRepository;
 import nl.tomjansen.loopgaindraft.service.feedback.FeedbackStringService;
@@ -9,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 public class FeedbackStringController {
 
-    @Autowired
-    private FeedbackStringService feedbackStringService;
+    private final FeedbackStringService feedbackStringService;
 
     @GetMapping("/feedback/{feedbackStringId}")
     public ResponseEntity<Object> getFeedbackString(@PathVariable Long feedbackStringId) {
