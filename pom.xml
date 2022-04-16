@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>nl.tomjansen</groupId>
-    <artifactId>loopgain-draft</artifactId>
+    <artifactId>loopgain</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>loopgain-draft</name>
-    <description>loopgain-draft</description>
+    <name>loopgain</name>
+    <description>loopgain</description>
     <properties>
         <java.version>17</java.version>
     </properties>
