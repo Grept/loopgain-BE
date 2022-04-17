@@ -50,14 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic()
 
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
-
-                .and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/user/projects").hasAuthority("PROJECT_HOST")
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .and().authorizeRequests().antMatchers("/user/projects").hasAuthority("PROJECT_HOST")
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/projects/*").fullyAuthenticated()
 
                 .and()
                 .authorizeRequests().anyRequest().authenticated()

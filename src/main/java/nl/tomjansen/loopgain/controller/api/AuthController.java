@@ -33,4 +33,5 @@ public class AuthController {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .body("Token generated");
     }
+
 }
