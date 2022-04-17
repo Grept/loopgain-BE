@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
@@ -17,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtService jwtService;
-//    private final UserDetailsService userDetailsService;
 
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -31,9 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
         auth
                 .inMemoryAuthentication()
-                .withUser("tomjansen").password("{noop}testpass").roles("PROJECT_HOST");
+                .withUser("tomjansen").password(encoder.encode("testpass")).authorities("PROJECT_HOST")
+
+                .and()
+                .withUser("roosnetjes").password(encoder.encode("testpass")).authorities("REVIEWER");
+
+
     }
 
     @Override
@@ -48,7 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
 
                 .and()
+                .authorizeRequests().antMatchers(HttpMethod.GET, "/user/projects").hasAuthority("PROJECT_HOST")
+
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
+
 
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
