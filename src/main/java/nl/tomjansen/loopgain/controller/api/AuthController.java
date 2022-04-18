@@ -10,12 +10,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:3000/")
 public class AuthController {
 
     // Dependendy Injection
@@ -24,6 +26,8 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<Object> signIn(@RequestBody AuthDto authDto) {
+//        System.out.println("Running signIn method");
+//        System.out.println(authDto.toString());
         UsernamePasswordAuthenticationToken up = new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword());
         Authentication auth = authManager.authenticate(up);
 
@@ -33,5 +37,4 @@ public class AuthController {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .body("Token generated");
     }
-
 }

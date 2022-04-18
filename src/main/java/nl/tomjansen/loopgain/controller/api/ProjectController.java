@@ -14,7 +14,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/user")
 public class ProjectController {
 
     // Dependency Injection via @RequiredArgsConstructor

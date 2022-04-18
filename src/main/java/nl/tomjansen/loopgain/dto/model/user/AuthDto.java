@@ -19,4 +19,9 @@ public class AuthDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return String.format("username: %s\npassword: %s", username, password);
+    }
 }
