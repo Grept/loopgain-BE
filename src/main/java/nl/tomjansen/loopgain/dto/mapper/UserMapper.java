@@ -4,6 +4,8 @@ import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.model.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,4 +25,10 @@ public abstract class UserMapper {
                 .setRole(user.getRole())
                 .setProjectDtoList(projectDtoList);
     }
+
+//    public static User dtoToEntity(UserDto dto) {
+//        User user = new User();
+//        user.setUsername(dto.getUsername());
+//        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+//    }
 }
