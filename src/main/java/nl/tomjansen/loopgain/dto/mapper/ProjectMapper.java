@@ -23,7 +23,7 @@ public abstract class ProjectMapper {
                 .setProjectName(entity.getProjectName())
                 .setDirector(entity.getDirector())
                 .setProducer(entity.getProducer())
-                .setProjectOwner(entity.getProjectOwner())
+                .setProjectOwner(entity.getProjectOwner().getUsername())
                 .setProjectMedia(mediaDtoList);
     }
 
@@ -39,7 +39,7 @@ public abstract class ProjectMapper {
         return new Project()
                 .setProjectName(projectDto.getProjectName())
                 .setDirector(projectDto.getDirector())
-                .setProducer(projectDto.getProducer())
-                .setProjectOwner(projectDto.getProjectOwner());
+                .setProducer(projectDto.getProducer());
+
     }
 }

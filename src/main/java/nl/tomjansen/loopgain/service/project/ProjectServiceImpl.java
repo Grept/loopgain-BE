@@ -7,6 +7,9 @@ import nl.tomjansen.loopgain.exception.RecordNotFoundException;
 import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
+import nl.tomjansen.loopgain.service.user.CustomUserPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,8 +57,12 @@ public class ProjectServiceImpl implements ProjectService {
         // Create a new Project Entity with the ProjectMapper.dtoToEntity() method.
         // Use the repo to save entity to the db. This also returns an entity.
         // Call the getId() method in order to return the Id to the controller api.
-        Project project = projectRepository.save(ProjectMapper.dtoToEntity(dto));
-        return project.getId();
+        Project project = ProjectMapper.dtoToEntity(dto);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserPrincipal userPrincipal = (CustomUserPrincipal) auth.getPrincipal();
+        project.setProjectOwner(userPrincipal.getUser());
+
+        return projectRepository.save(project).getId();
     }
 
 
