@@ -50,14 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+                .and().authorizeRequests().antMatchers("/user/projects").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll()
-                .and().authorizeRequests().antMatchers("/user/projects").hasAuthority("PROJECT_HOST")
                 .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/projects/*").fullyAuthenticated()
 
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
-
 
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)

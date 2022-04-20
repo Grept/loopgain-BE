@@ -5,13 +5,13 @@ import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:3000/")
 public class UserController {
 
     private final UserService userService;
@@ -23,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@RequestBody UserDto userDto) {
-        System.out.println(String.format("DTO password: %s", userDto.getPassword()));
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody UserDto userDto) {
+        System.out.println(String.format("DTO role: %s", userDto.getRole()));
 
         Long id = userService.createUser(userDto);
 

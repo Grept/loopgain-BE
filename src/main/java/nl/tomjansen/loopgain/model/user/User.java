@@ -34,5 +34,5 @@ public class User {
     @JsonIgnore
     private List<Project> projectList = new ArrayList<>();
 
-    private UserRoles role;
+    private String role;
 }

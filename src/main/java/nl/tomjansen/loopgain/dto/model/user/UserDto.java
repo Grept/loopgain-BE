@@ -19,8 +19,8 @@ import java.util.List;
 public class UserDto {
 
     @NotNull private String username;
-    private String password;
+    @NotNull private String password;
     private String emailadress;
-    private UserRoles role;
+    @NotNull private String role;
     private List<ProjectDto> projectDtoList = new ArrayList<>();
 }

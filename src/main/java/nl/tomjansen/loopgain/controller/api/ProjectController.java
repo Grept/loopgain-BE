@@ -14,6 +14,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:3000/")
+@RequestMapping(value = "/user")
 public class ProjectController {
 
     // Dependency Injection via @RequiredArgsConstructor

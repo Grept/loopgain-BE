@@ -5,11 +5,13 @@ import nl.tomjansen.loopgain.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.exception.RecordNotFoundException;
 import nl.tomjansen.loopgain.model.project.Project;
+import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
 import nl.tomjansen.loopgain.service.user.CustomUserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,8 +61,14 @@ public class ProjectServiceImpl implements ProjectService {
         // Call the getId() method in order to return the Id to the controller api.
         Project project = ProjectMapper.dtoToEntity(dto);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserPrincipal userPrincipal = (CustomUserPrincipal) auth.getPrincipal();
-        project.setProjectOwner(userPrincipal.getUser());
+
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        System.out.println(userDetails.getUsername());
+        User user = userRepository.findUserByUsername(userDetails.getUsername()).get();
+        project.setProjectOwner(user);
+
+//        CustomUserPrincipal userPrincipal = (CustomUserPrincipal) auth.getPrincipal();
+//        project.setProjectOwner(userPrincipal.getUser());
 
         return projectRepository.save(project).getId();
     }

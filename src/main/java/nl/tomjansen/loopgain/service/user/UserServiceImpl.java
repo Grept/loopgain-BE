@@ -42,10 +42,11 @@ public class UserServiceImpl implements UserService{
 
         if(!userRepository.existsByUsername(userDto.getUsername())) {
             // Ik gebruik hier geen mapper omdat we een de methodes in de mapper static zijn en het niet lukt om een bean
-            // te gebruiken.
+            // te gebruiken van de passwordEncoder.
             User user = new User();
             user.setUsername(userDto.getUsername());
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setRole(userDto.getRole());
 
             return userRepository.save(user).getId();
         } else {
