@@ -9,6 +9,7 @@ import nl.tomjansen.loopgain.model.project.Project;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,4 +36,13 @@ public class User {
     private List<Project> projectList = new ArrayList<>();
 
     private String role;
+
+    // Ik gebruik hier een Set ipv een List. Een list kan duplicate waardes bevatten en een set alleen unieke waardes.
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "username"
+    )
+    private Set<Authority> authorities;
 }

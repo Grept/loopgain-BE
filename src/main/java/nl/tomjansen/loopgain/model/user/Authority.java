@@ -4,17 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "authorities")
-@NoArgsConstructor
 @Getter
 @Setter
-public class Authority {
+@NoArgsConstructor
+@Entity
+@Table(name = "authorities")
+@IdClass(AuthorityId.class)
+public class Authority implements Serializable {
 
     @Id
     @Column(nullable = false)
@@ -28,6 +27,4 @@ public class Authority {
         this.username = username;
         this.authority = authority;
     }
-
-
 }
