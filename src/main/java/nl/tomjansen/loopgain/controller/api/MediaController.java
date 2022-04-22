@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/user/projects/{projectId}")
+@CrossOrigin(value = "http://localhost:3000/")
 public class MediaController {
 
     // Dependency Injection via @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class MediaController {
     private final MediaService mediaService;
 
     // POST ONE MEDIA FILE
-    @RequestMapping(value = "/media", method = RequestMethod.POST)
+    @RequestMapping(value = "/project/{projectId}/media", method = RequestMethod.POST)
     public ResponseEntity<Object> saveMedia(
             @RequestParam String fileName,
             @RequestParam MultipartFile file,

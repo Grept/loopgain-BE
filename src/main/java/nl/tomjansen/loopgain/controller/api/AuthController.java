@@ -27,8 +27,6 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<Object> signIn(@RequestBody AuthDto authDto) {
-//        System.out.println("Running signIn method");
-//        System.out.println(authDto.toString());
         UsernamePasswordAuthenticationToken up = new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword());
         Authentication auth = authManager.authenticate(up);
 
@@ -38,11 +36,7 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
 
-        System.out.println(token);
+//        System.out.println(token);
         return new ResponseEntity<>("Token generated", headers, HttpStatus.OK);
-
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-//                .body("Token generated");
     }
 }

@@ -8,7 +8,7 @@ import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
-import nl.tomjansen.loopgain.service.user.CustomUserPrincipal;
+import nl.tomjansen.loopgain.service.user.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +29,11 @@ public class ProjectServiceImpl implements ProjectService {
     // GET ALL
     @Override
     public List<ProjectDto> getAllProjects() {
-        List<Project> projectList = projectRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+
+        List<Project> projectList = projectRepository.findAllByProjectOwner_Id(userDetails.getUser().getId());
         List<ProjectDto> projectDtoList = new ArrayList<>();
 
         for(Project p : projectList) {
@@ -55,20 +59,26 @@ public class ProjectServiceImpl implements ProjectService {
 
     // POST ONE
     @Override
-    public Long postProject(ProjectDto dto) {
+    public Long postProject(ProjectDto projectDto) {
         // Create a new Project Entity with the ProjectMapper.dtoToEntity() method.
         // Use the repo to save entity to the db. This also returns an entity.
         // Call the getId() method in order to return the Id to the controller api.
-        Project project = ProjectMapper.dtoToEntity(dto);
+        Project project = ProjectMapper.dtoToEntity(projectDto);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        System.out.println(userDetails.getUsername());
-        User user = userRepository.findUserByUsername(userDetails.getUsername()).get();
-        project.setProjectOwner(user);
-
-//        CustomUserPrincipal userPrincipal = (CustomUserPrincipal) auth.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 //        project.setProjectOwner(userPrincipal.getUser());
+
+//        System.out.println(userDetails.getUsername());
+        System.out.println(userDetails.getUsername());
+
+        Optional<User> userOptional = userRepository.findUserByUsername(userDetails.getUsername());
+        if(userOptional.isPresent()) {
+            project.setProjectOwner(userOptional.get());
+        }
+
 
         return projectRepository.save(project).getId();
     }

@@ -23,6 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        return new CustomUserPrincipal(userOptional.get());
+        return new CustomUserDetails(userOptional.get());
     }
 }
