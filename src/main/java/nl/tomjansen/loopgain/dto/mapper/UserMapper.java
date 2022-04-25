@@ -23,14 +23,15 @@ public abstract class UserMapper {
         return new UserDto()
                 .setUsername(user.getUsername())
                 .setPassword(user.getPassword())
-                .setProjectDtoList(projectDtoList);
+                .setProjectDtoList(projectDtoList)
+                .setRole(user.getAuthorities().stream().toList().get(0).getAuthority());
     }
 
     public static User dtoToEntity(UserDto dto) {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
-        user.addAuthority(new Authority(dto.getUsername(), dto.getRole()));
+//        user.addAuthority(new Authority(dto.getUsername(), dto.getRole()));
 
         return user;
     }

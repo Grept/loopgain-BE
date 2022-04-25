@@ -19,10 +19,10 @@ import java.util.Set;
 @Entity
 public class User {
 
-    @Id
     @GeneratedValue
     private Long id;
 
+    @Id
     private String username;
 
     private String password;
@@ -36,11 +36,11 @@ public class User {
 
     // Ik gebruik hier een Set ipv een List. Een list kan duplicate waardes bevatten en een set alleen unieke waardes.
     @OneToMany(
+            targetEntity = Authority.class,
+            mappedBy = "username",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER,
-            mappedBy = "username"
-    )
+            fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
     // Ik gebruik hier geen Lombok voor het maken van getters en setters omdat ik voor het veld authorities mijn eigen
@@ -76,9 +76,12 @@ public class User {
     public Set<Authority> getAuthorities() {
         return authorities;
     }
-
     public void addAuthority(Authority authority) {
         authorities.add(authority);
+    }
+
+    public void removeAuthorities(Authority authority) {
+        this.authorities.remove(authority);
     }
 
 
