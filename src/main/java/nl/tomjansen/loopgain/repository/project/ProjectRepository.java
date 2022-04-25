@@ -7,5 +7,5 @@ import org.w3c.dom.stylesheets.LinkStyle;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> findAllByProjectOwner_Id(Long id);
+    List<Project> findAllByProjectOwner_Username(String username);
 }

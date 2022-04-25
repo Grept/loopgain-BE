@@ -25,8 +25,8 @@ public class MediaController {
     // POST ONE MEDIA FILE
     @RequestMapping(value = "/project/{projectId}/media", method = RequestMethod.POST)
     public ResponseEntity<Object> saveMedia(
-            @RequestParam String fileName,
             @RequestParam MultipartFile file,
+            @RequestParam String fileName,
             @PathVariable Long projectId)
             throws IOException {
 

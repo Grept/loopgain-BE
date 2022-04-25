@@ -30,10 +30,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> getAllProjects() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 
-        List<Project> projectList = projectRepository.findAllByProjectOwner_Id(userDetails.getUser().getId());
+        List<Project> projectList = projectRepository.findAllByProjectOwner_Username(userDetails.getUsername());
         List<ProjectDto> projectDtoList = new ArrayList<>();
 
         for(Project p : projectList) {
@@ -66,9 +66,9 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = ProjectMapper.dtoToEntity(projectDto);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
-        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+//        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 //        project.setProjectOwner(userPrincipal.getUser());
 
 //        System.out.println(userDetails.getUsername());
