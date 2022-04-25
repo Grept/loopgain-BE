@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgain.service.user;
 
+import nl.tomjansen.loopgain.model.user.Authority;
 import nl.tomjansen.loopgain.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {
     private User user;
@@ -17,8 +19,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<String> roles = new ArrayList<>();
-        roles.add(user.getRole());
         return null;
     }
 

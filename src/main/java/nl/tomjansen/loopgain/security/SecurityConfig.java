@@ -46,19 +46,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic()
+//                .httpBasic()
 
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
 
-                .and().authorizeRequests().antMatchers("/user/projects").authenticated()
-                .and().authorizeRequests().antMatchers("/", "/home").permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/projects/*").fullyAuthenticated()
+//                .and().authorizeRequests().antMatchers("/user/projects").authenticated()
+                .antMatchers("/", "/home").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+//                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll()
+//                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/projects/*").fullyAuthenticated()
 
-                .and()
-                .authorizeRequests().anyRequest().authenticated()
-
+                .anyRequest().permitAll()
+//
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
 

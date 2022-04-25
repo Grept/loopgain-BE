@@ -20,8 +20,8 @@ public class AuthDto {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return String.format("username: %s\npassword: %s", username, password);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("username: %s\npassword: %s", username, password);
+//    }
 }

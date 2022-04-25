@@ -27,4 +27,5 @@ public class Authority implements Serializable {
         this.username = username;
         this.authority = authority;
     }
+
 }

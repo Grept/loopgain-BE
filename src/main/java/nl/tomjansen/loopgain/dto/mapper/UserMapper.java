@@ -3,6 +3,7 @@ package nl.tomjansen.loopgain.dto.mapper;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.model.project.Project;
+import nl.tomjansen.loopgain.model.user.Authority;
 import nl.tomjansen.loopgain.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,8 +23,6 @@ public abstract class UserMapper {
         return new UserDto()
                 .setUsername(user.getUsername())
                 .setPassword(user.getPassword())
-                .setEmailadress(user.getEmailadress())
-                .setRole(user.getRole())
                 .setProjectDtoList(projectDtoList);
     }
 
@@ -31,6 +30,7 @@ public abstract class UserMapper {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
+        user.addAuthority(new Authority(dto.getUsername(), dto.getRole()));
 
         return user;
     }

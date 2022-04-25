@@ -5,6 +5,7 @@ import nl.tomjansen.loopgain.dto.mapper.UserMapper;
 import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.exception.RecordNotFoundException;
 import nl.tomjansen.loopgain.exception.UsernameAlreadyInUseException;
+import nl.tomjansen.loopgain.model.user.Authority;
 import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
 import org.springframework.security.core.Authentication;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService{
             User user = new User();
             user.setUsername(userDto.getUsername());
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            user.setRole(userDto.getRole());
+            user.addAuthority(new Authority(userDto.getUsername(), userDto.getRole()));
 
             return userRepository.save(user).getId();
         } else {
