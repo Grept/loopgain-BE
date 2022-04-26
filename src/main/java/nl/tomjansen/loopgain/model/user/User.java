@@ -19,8 +19,8 @@ import java.util.Set;
 @Entity
 public class User {
 
-    @GeneratedValue
-    private Long id;
+//    @Column(columnDefinition = "serial")
+//    private Long id;
 
     @Id
     private String username;
@@ -45,12 +45,12 @@ public class User {
 
     // Ik gebruik hier geen Lombok voor het maken van getters en setters omdat ik voor het veld authorities mijn eigen
     // implementatie gebruiken wil.
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getUsername() {
         return username;

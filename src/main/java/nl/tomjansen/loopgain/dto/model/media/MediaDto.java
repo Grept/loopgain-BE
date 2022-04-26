@@ -19,8 +19,12 @@ public class MediaDto {
     private String contentId;
     private long contentLength;
     private String contentMimeType;
+    private String parentProjectName;
+    private String director;
+    private String producer;
+    private String projectHost;
 
     // Deze DTO bevat ook een inputstream. Dit is wat er uiteindelijk terug gegeven gaat worden aan de ResponseEntity.
     // De DTO verschilt hierin van het model.
-    private InputStreamResource inputStreamResource;
+    private InputStreamResource inputStreamResource = null;
 }

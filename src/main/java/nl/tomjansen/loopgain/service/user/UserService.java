@@ -6,5 +6,5 @@ public interface UserService {
 
     public UserDto getUserData();
 
-    Long createUser(UserDto userDto);
+    String createUser(UserDto userDto);
 }

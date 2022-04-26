@@ -57,15 +57,16 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public List<String> listAllMedia() {
+    public List<MediaDto> getAllMediaInfo() {
         List<Media> mediaList = mediaRepository.findAll();
-        List<String> mediaNameList = new ArrayList<>();
+        List<MediaDto> mediaDtoList = new ArrayList<>();
 
         for (Media m : mediaList) {
-            mediaNameList.add(m.getFileName());
+            // We geven hier geen inputstream mee aan de dto's.
+            mediaDtoList.add(MediaMapper.entityToDto(m, null));
         }
 
-        return mediaNameList;
+        return mediaDtoList;
     }
 
     @Override

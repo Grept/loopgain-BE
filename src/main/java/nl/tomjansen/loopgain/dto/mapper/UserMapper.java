@@ -22,7 +22,7 @@ public abstract class UserMapper {
 
         return new UserDto()
                 .setUsername(user.getUsername())
-                .setPassword(user.getPassword())
+                .setPassword("xxx-xxx-xxx-xxx")
                 .setProjectDtoList(projectDtoList)
                 .setRole(user.getAuthorities().stream().toList().get(0).getAuthority());
     }

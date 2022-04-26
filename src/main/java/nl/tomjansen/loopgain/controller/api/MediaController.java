@@ -32,7 +32,6 @@ public class MediaController {
 
             Long id = mediaService.saveMedia(fileName, file, projectId);
             return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
-
     }
 
     // GET ONE FILE
@@ -47,10 +46,10 @@ public class MediaController {
         return new ResponseEntity<>(mediaDto.getInputStreamResource(), headers, HttpStatus.OK);
     }
 
-    // LIST ALL FILENAMES
+    // GET ALL MEDIAINFO
     @RequestMapping(value = "/media")
-    public ResponseEntity<Object> listAllMedia() {
-        return new ResponseEntity<>(mediaService.listAllMedia(), HttpStatus.OK);
+    public ResponseEntity<Object> getAllMediaInfo() {
+        return new ResponseEntity<>(mediaService.getAllMediaInfo(), HttpStatus.OK);
     }
 
     // DELETE MEDIA FILE

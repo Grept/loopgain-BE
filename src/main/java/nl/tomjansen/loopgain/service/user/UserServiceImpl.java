@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Long createUser(UserDto userDto) {
+    public String createUser(UserDto userDto) {
 
         if(!userRepository.existsByUsername(userDto.getUsername())) {
             // Ik gebruik hier geen mapper omdat we een de methodes in de mapper static zijn en het niet lukt om een bean
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.addAuthority(new Authority(userDto.getUsername(), userDto.getRole()));
 
-            return userRepository.save(user).getId();
+            return userRepository.save(user).getUsername();
         } else {
             throw new UsernameAlreadyInUseException(
                     String.format("Username '%s' is already in use.", userDto.getUsername())

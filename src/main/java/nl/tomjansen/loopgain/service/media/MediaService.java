@@ -11,7 +11,7 @@ public interface MediaService {
 
     MediaDto getMedia(Long id);
 
-    List<String> listAllMedia();
+    List<MediaDto> getAllMediaInfo();
 
     void deleteFile(Long mediaId);
 }

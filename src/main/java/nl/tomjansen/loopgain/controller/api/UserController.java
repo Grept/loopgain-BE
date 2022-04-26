@@ -26,9 +26,9 @@ public class UserController {
     public ResponseEntity<Object> registerUser(@Valid @RequestBody UserDto userDto) {
         System.out.println(String.format("DTO role: %s", userDto.getRole()));
 
-        Long id = userService.createUser(userDto);
+        String username = userService.createUser(userDto);
 
-        return new ResponseEntity<Object>(String.format("Created new user with ID: %d.", id), HttpStatus.CREATED);
+        return new ResponseEntity<Object>(String.format("Created new user with ID: %s.", username), HttpStatus.CREATED);
     }
 
 }

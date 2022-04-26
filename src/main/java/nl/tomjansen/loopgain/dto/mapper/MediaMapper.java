@@ -32,6 +32,10 @@ public abstract class MediaMapper {
                 .setContentMimeType(entity.getContentMimeType())
                 .setContentId(entity.getContentId())
                 .setContentLength(entity.getContentLength())
+                .setParentProjectName(entity.getProject().getProjectName())
+                .setDirector(entity.getProject().getDirector())
+                .setProducer(entity.getProject().getProducer())
+                .setProjectHost(entity.getProject().getProjectOwner().getUsername())
                 .setInputStreamResource(inputStreamResource);
 
     }
