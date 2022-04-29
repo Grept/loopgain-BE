@@ -2,6 +2,7 @@ package nl.tomjansen.loopgain.service.feedback;
 
 import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgain.dto.mapper.FeedbackStringMapper;
+import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgain.exception.RecordNotFoundException;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
@@ -10,6 +11,7 @@ import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
 import nl.tomjansen.loopgain.repository.media.MediaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +20,7 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
 
     private final FeedbackStringRepository feedbackStringRepository;
     private final MediaRepository mediaRepository;
+    private final CommentService commentService;
 
     @Override
     public FeedbackStringDto getFeedbackString(Long id) {
@@ -52,5 +55,17 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
         } else {
             throw new RecordNotFoundException(String.format("FeedbackString with ID: %d was not found.", feedbackStringId));
         }
+    }
+
+    @Override
+    public FeedbackStringDto createFilledFeedbackString(Long mediaId, List<CommentDto> commentList) {
+        Long feedbackStringId = createFeedbackString(mediaId);
+
+        for(CommentDto commentDto : commentList) {
+            commentService.saveComment(commentDto, feedbackStringId);
+        }
+
+        return getFeedbackString(feedbackStringId);
+
     }
 }

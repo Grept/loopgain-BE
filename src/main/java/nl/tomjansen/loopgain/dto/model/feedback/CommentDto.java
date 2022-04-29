@@ -3,6 +3,7 @@ package nl.tomjansen.loopgain.dto.model.feedback;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -11,6 +12,6 @@ import java.sql.Timestamp;
 @Accessors(chain = true)
 public class CommentDto implements Serializable {
     private Long id;
-    private String commentText;
-    private Timestamp timeStamp;
+    @NotEmpty private String commentText;
+    @NotEmpty private Double timeStamp;
 }

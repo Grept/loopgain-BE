@@ -21,7 +21,7 @@ public class Comment {
 
     private String commentText;
 
-    private Timestamp timeStamp = new Timestamp(Instant.now().toEpochMilli());
+    private Double timeStamp;
 
     @ManyToOne
     @JoinColumn(name = "feedback_comment_id")

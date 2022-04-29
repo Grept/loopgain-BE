@@ -10,6 +10,7 @@ import nl.tomjansen.loopgain.repository.feedback.CommentRepository;
 import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,4 +32,6 @@ public class CommentServiceImpl implements CommentService{
             throw new RecordNotFoundException(String.format("FeedbackString with ID: %d was not found", feedbackStringId));
         }
     }
+
+
 }
