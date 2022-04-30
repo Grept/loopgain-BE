@@ -1,9 +1,14 @@
 package nl.tomjansen.loopgain.dto.mapper;
 
+import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgain.dto.model.media.MediaDto;
+import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.media.Media;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MediaMapper {
 
@@ -25,6 +30,12 @@ public abstract class MediaMapper {
         // Een static field injecteren gaat een beetje voorbij aan het idee van dependency injection. Daarom geven we
         // de inputStreamResource mee als argument, dan hoeven we geen contentStore te Autowiren.
 
+        List<FeedbackStringDto> feedbackStringDtoList = new ArrayList<>();
+
+        for (FeedbackString feedbackString : entity.getFeedbackCollection()) {
+            feedbackStringDtoList.add(FeedbackStringMapper.entityToDto(feedbackString));
+        }
+
         return new MediaDto()
                 .setId(entity.getId())
                 .setFileName(entity.getFileName())
@@ -36,6 +47,7 @@ public abstract class MediaMapper {
                 .setDirector(entity.getProject().getDirector())
                 .setProducer(entity.getProject().getProducer())
                 .setProjectHost(entity.getProject().getProjectOwner().getUsername())
+                .setFeedbackStringDtoList(feedbackStringDtoList)
                 .setInputStreamResource(inputStreamResource);
 
     }

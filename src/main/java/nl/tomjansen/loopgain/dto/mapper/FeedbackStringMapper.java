@@ -20,7 +20,7 @@ public abstract class FeedbackStringMapper {
         return new FeedbackStringDto()
                 .setId(feedbackString.getId())
                 .setCommentList(commentDtoList)
-                .setReviewer(feedbackString.getReviewer().getUsername())
-                .setMediaDto(MediaMapper.entityToDto(feedbackString.getMediaFile(), null));
+                .setReviewer(feedbackString.getReviewer().getUsername());
+//                .setMediaDto(MediaMapper.entityToDto(feedbackString.getMediaFile(), null));
     }
 }

@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
 import org.springframework.core.io.InputStreamResource;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +26,7 @@ public class MediaDto {
     private String director;
     private String producer;
     private String projectHost;
+    private List<FeedbackStringDto> feedbackStringDtoList = new ArrayList<>();
 
     // Deze DTO bevat ook een inputstream. Dit is wat er uiteindelijk terug gegeven gaat worden aan de ResponseEntity.
     // De DTO verschilt hierin van het model.

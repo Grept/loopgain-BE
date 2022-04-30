@@ -2,6 +2,7 @@ package nl.tomjansen.loopgain.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgain.dto.model.media.MediaDto;
+import nl.tomjansen.loopgain.model.media.Media;
 import nl.tomjansen.loopgain.repository.media.MediaRepository;
 import nl.tomjansen.loopgain.service.media.MediaService;
 import org.springframework.http.HttpHeaders;
@@ -34,9 +35,9 @@ public class MediaController {
             return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
     }
 
-    // GET ONE FILE
-    @RequestMapping(value = "/media/{mediaId}")
-    public ResponseEntity<Object> getMedia(@PathVariable Long mediaId) {
+    // GET ONE FILESTREAM
+    @RequestMapping(value = "/media/{mediaId}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMediaStream(@PathVariable Long mediaId) {
         MediaDto mediaDto = mediaService.getMedia(mediaId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentLength(mediaDto.getContentLength());
@@ -45,6 +46,17 @@ public class MediaController {
 
         return new ResponseEntity<>(mediaDto.getInputStreamResource(), headers, HttpStatus.OK);
     }
+
+    // GET FILE METADATA
+    @RequestMapping(value = "/media/{mediaId}/data", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMediaData(@PathVariable Long mediaId) {
+        MediaDto mediaDto = mediaService.getMedia(mediaId);
+        mediaDto.setInputStreamResource(null);
+
+        return new ResponseEntity<>(mediaDto, HttpStatus.OK);
+    }
+
+
 
     // GET ALL MEDIAINFO
     @RequestMapping(value = "/media")
