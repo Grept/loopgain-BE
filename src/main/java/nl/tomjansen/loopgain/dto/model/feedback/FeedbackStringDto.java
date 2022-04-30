@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import nl.tomjansen.loopgain.dto.model.media.MediaDto;
+import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.model.media.Media;
 
 import java.util.List;
@@ -15,5 +17,6 @@ import java.util.List;
 public class FeedbackStringDto {
     private Long id;
     private List<CommentDto> commentList;
-    private Media mediaFile;
+    private MediaDto mediaDto;
+    private String reviewer;
 }

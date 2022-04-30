@@ -1,9 +1,8 @@
 package nl.tomjansen.loopgain.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.project.Project;
 
 import javax.persistence.*;
@@ -27,8 +26,9 @@ public class User {
 
     private String password;
 
-//    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
-//    private List<FeedbackString> feedbackStrings;
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FeedbackString> feedbackStringList = new ArrayList<>();
 
     @OneToMany(mappedBy = "projectOwner", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -64,6 +64,14 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<FeedbackString> getFeedbackStringList() {
+        return feedbackStringList;
+    }
+
+    public void setFeedbackStringList(List<FeedbackString> feedbackStrings) {
+        this.feedbackStringList = feedbackStrings;
     }
 
     public List<Project> getProjectList() {

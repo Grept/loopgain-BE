@@ -6,7 +6,7 @@ import nl.tomjansen.loopgain.model.feedback.Comment;
 public abstract class CommentMapper {
 
     public static Comment dtoToEntity(CommentDto dto) {
-        return new Comment(dto.getCommentText());
+        return new Comment(dto.getCommentText(), dto.getTimeStamp());
     }
 
     public static CommentDto entityToDto(Comment entity) {

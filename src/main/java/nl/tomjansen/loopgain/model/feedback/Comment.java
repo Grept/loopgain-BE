@@ -27,7 +27,8 @@ public class Comment {
     @JoinColumn(name = "feedback_comment_id")
     private FeedbackString feedbackString;
 
-    public Comment(String commentText) {
+    public Comment(String commentText, Double timeStamp) {
         this.commentText = commentText;
+        this.timeStamp = timeStamp;
     }
 }

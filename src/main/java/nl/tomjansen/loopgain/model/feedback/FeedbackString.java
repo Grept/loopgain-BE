@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import nl.tomjansen.loopgain.model.media.Media;
+import nl.tomjansen.loopgain.model.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,9 +28,9 @@ public class FeedbackString {
     @JoinColumn(name = "media_feedback_id")
     private Media mediaFile;
 
-//    @ManyToOne
-//    @JoinColumn(name = "reviewer_id")
-//    private User reviewer;
+    @ManyToOne
+    @JoinColumn(name = "reviewer_id")
+    private User reviewer;
 
 //    @Override
 //    public String toString() {

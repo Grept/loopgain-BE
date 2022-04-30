@@ -7,8 +7,13 @@ import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgain.exception.RecordNotFoundException;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.media.Media;
+import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
 import nl.tomjansen.loopgain.repository.media.MediaRepository;
+import nl.tomjansen.loopgain.repository.user.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +26,7 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
     private final FeedbackStringRepository feedbackStringRepository;
     private final MediaRepository mediaRepository;
     private final CommentService commentService;
+    private final UserRepository userRepository;
 
     @Override
     public FeedbackStringDto getFeedbackString(Long id) {
@@ -39,6 +45,15 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
         if(mediaOptional.isPresent()) {
             FeedbackString feedbackString = new FeedbackString();
             feedbackString.setMediaFile(mediaOptional.get());
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+
+            Optional<User> userOptional = userRepository.findUserByUsername(userDetails.getUsername());
+            if(userOptional.isPresent()) {
+                feedbackString.setReviewer(userOptional.get());
+            }
+
             return feedbackStringRepository.save(feedbackString).getId();
         } else {
             throw new RecordNotFoundException(String.format("Mediafile with ID: %d was not found.", mediaId));
