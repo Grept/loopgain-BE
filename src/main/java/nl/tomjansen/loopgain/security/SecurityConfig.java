@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Project API
                 .antMatchers("/user/projects").hasAuthority("PROJECT_HOST")
-                .antMatchers("/user/projects/{projectId:[\\d+}").hasAuthority("PROJECT_HOST")
+                .antMatchers("/user/projects/{projectId:[\\d+]}").hasAuthority("PROJECT_HOST")
 
                 // Media API
                 .antMatchers(HttpMethod.POST,"/project/{projectId:[\\d+]}/media").hasAuthority("PROJECT_HOST")
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Feedback API
                 .antMatchers(HttpMethod.POST,"/media/{mediaId:[\\d+]}/feedback").hasAuthority("REVIEWER")
-                .antMatchers(HttpMethod.DELETE, "/feedback/{feedbackStringId}").hasAuthority("REVIEWER")
+                .antMatchers(HttpMethod.DELETE, "/feedback/{feedbackStringId:[\\d+]}").hasAuthority("REVIEWER")
 
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)

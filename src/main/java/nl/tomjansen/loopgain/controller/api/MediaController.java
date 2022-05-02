@@ -74,8 +74,11 @@ public class MediaController {
     @RequestMapping(value = "/media/{mediaId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteMediaFile(@PathVariable Long mediaId) {
 
-        mediaService.deleteFile(mediaId);
+        MediaDto mediaDto = mediaService.deleteFile(mediaId);
 
-        return new ResponseEntity<>("Media file deleted.", HttpStatus.OK);
+        return new ResponseEntity<>(String.format(
+                "Mediafile with name \"%s\" has been deleted.",
+                mediaDto.getFileName()
+        ), HttpStatus.OK);
     }
 }

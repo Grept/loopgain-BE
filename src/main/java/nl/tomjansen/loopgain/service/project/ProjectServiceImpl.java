@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgain.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.exception.RecordNotFoundException;
+import nl.tomjansen.loopgain.model.media.Media;
 import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
-import nl.tomjansen.loopgain.service.user.CustomUserDetails;
+import nl.tomjansen.loopgain.service.media.MediaService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
-
+    private final MediaService mediaService;
 
     // GET ALL
     @Override
@@ -43,7 +44,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectDtoList;
     }
 
-
     // GET ONE
     @Override
     public ProjectDto getProject(Long id) {
@@ -56,7 +56,6 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
-
     // POST ONE
     @Override
     public Long postProject(ProjectDto projectDto) {
@@ -67,18 +66,12 @@ public class ProjectServiceImpl implements ProjectService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
-
-//        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-//        project.setProjectOwner(userPrincipal.getUser());
-
-//        System.out.println(userDetails.getUsername());
         System.out.println(userDetails.getUsername());
 
         Optional<User> userOptional = userRepository.findUserByUsername(userDetails.getUsername());
         if(userOptional.isPresent()) {
             project.setProjectOwner(userOptional.get());
         }
-
 
         return projectRepository.save(project).getId();
     }
@@ -93,7 +86,21 @@ public class ProjectServiceImpl implements ProjectService {
 
     // DELETE ONE
     @Override
-    public Long deleteProject(Long projectId) {
-        return null;
+    public ProjectDto deleteProject(Long projectId) {
+
+        Optional<Project> projectOptional = projectRepository.findById(projectId);
+        if(projectOptional.isPresent()) {
+
+            // Make sure all stored media is deleted from the filesystem.
+            for(Media m : projectOptional.get().getMedia()) {
+                mediaService.deleteFile(m.getId());
+            }
+
+            projectRepository.deleteById(projectId);
+        } else {
+            throw new RecordNotFoundException();
+        }
+
+        return ProjectMapper.entityToDto(projectOptional.get());
     }
 }

@@ -32,7 +32,7 @@ public class MediaServiceImpl implements MediaService {
 
         Optional<Project> projectOptional = projectRepository.findById(projectId);
 
-        if(projectOptional.isPresent()) {
+        if (projectOptional.isPresent()) {
             if (mediaRepository.existsByFileName(fileName)) {
                 throw new MediaAlreadyExistsException();
             }
@@ -49,7 +49,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public MediaDto getMedia(Long id) {
         Optional<Media> m = mediaRepository.findById(id);
-        if(m.isPresent()) {
+        if (m.isPresent()) {
             return MediaMapper.entityToDto(m.get(), new InputStreamResource(contentStore.getContent(m.get())));
         } else {
             throw new RecordNotFoundException("Media file not found.");
@@ -70,12 +70,24 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public void deleteFile(Long mediaId) {
-        Optional<Media> mediaFile = mediaRepository.findById(mediaId);
-        if(mediaFile.isPresent()) {
-            mediaRepository.delete(mediaFile.get());
+    public MediaDto deleteFile(Long mediaId) {
+        Optional<Media> mediaOptional = mediaRepository.findById(mediaId);
+        if (mediaOptional.isPresent()) {
+            System.out.printf(
+                    "Delete file with ID:%d from fs.%n",
+                    mediaOptional.get().getId()
+                    );
+            contentStore.unsetContent(mediaOptional.get());
+
+            System.out.printf(
+                    "Delete file with ID:%d from db.%n",
+                    mediaOptional.get().getId()
+            );
+            mediaRepository.delete(mediaOptional.get());
         } else {
             throw new RecordNotFoundException("Media file not found.");
         }
+
+        return MediaMapper.entityToDto(mediaOptional.get(), null);
     }
 }

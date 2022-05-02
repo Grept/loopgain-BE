@@ -13,5 +13,5 @@ public interface MediaService {
 
     List<MediaDto> getAllMediaInfo();
 
-    void deleteFile(Long mediaId);
+    MediaDto deleteFile(Long mediaId);
 }

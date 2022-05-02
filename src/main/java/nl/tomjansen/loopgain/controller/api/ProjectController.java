@@ -3,6 +3,7 @@ package nl.tomjansen.loopgain.controller.api;
 import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgain.controller.request.ProjectRequest;
 import nl.tomjansen.loopgain.dto.mapper.ProjectMapper;
+import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.service.project.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,9 @@ public class ProjectController {
 
     @PostMapping("/projects")
     public ResponseEntity<Object> createProject(@Valid @RequestBody ProjectRequest projectRequest, BindingResult br) {
-        if(br.hasErrors()) {
+        if (br.hasErrors()) {
             StringBuilder sb = new StringBuilder();
-            for(FieldError fe: br.getFieldErrors()) {
+            for (FieldError fe : br.getFieldErrors()) {
                 sb.append(fe).append("/n");
             }
 
@@ -55,8 +56,11 @@ public class ProjectController {
     @DeleteMapping("/projects/{projectId}")
     public ResponseEntity<Object> deleteProject(@PathVariable Long projectId) {
 
-        projectService.deleteProject(projectId);
+        ProjectDto projectDto = projectService.deleteProject(projectId);
 
-        return null;
+        return new ResponseEntity<Object>(String.format(
+                "Project with title \"%s\" was deleted.",
+                projectDto.getProjectName()
+        ), HttpStatus.OK);
     }
 }

@@ -14,5 +14,5 @@ public interface ProjectService {
 
     public ProjectDto updateProject(ProjectDto dto, Long projectId);
 
-    public Long deleteProject(Long projectId);
+    public ProjectDto deleteProject(Long projectId);
 }
