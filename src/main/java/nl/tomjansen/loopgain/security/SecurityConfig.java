@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
 
-                .antMatchers("/user/projects").authenticated()
+                .antMatchers("/user/projects").hasRole("PROJECT_HOST")
                 .antMatchers("/", "/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
 //                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll()

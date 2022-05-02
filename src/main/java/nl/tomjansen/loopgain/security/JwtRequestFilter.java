@@ -1,5 +1,6 @@
 package nl.tomjansen.loopgain.security;
 
+import nl.tomjansen.loopgain.service.user.CustomUserDetailsService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,11 +20,11 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     // Dependency Injection
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     private final JwtService jwtService;
 
-    public JwtRequestFilter(JwtService jwtService, UserDetailsService udService) {
+    public JwtRequestFilter(JwtService jwtService, CustomUserDetailsService udService) {
         this.jwtService = jwtService;
         this.userDetailsService = udService;
     }
