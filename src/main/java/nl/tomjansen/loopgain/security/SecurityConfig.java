@@ -48,14 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
 
                 // Project API
-                .antMatchers("/user/projects").hasAuthority("PROJECT_HOST")
-                .antMatchers("/user/projects/{projectId:[\\d+]}").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.GET, "/user/projects/{projectId:[\\d+]}").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.DELETE, "/user/projects/{projectId:[\\d+]}").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.GET, "/user/projects").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.POST, "/user/projects").hasAuthority("PROJECT_HOST")
 
                 // Media API
                 .antMatchers(HttpMethod.POST,"/project/{projectId:[\\d+]}/media").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.GET,"/media/{mediaId:[\\d+]}/data").hasAnyAuthority("PROJECT_HOST", "REVIEWER")
                 .antMatchers(HttpMethod.DELETE,"/media/{mediaId:[\\d+]}").hasAuthority("PROJECT_HOST")
                 .antMatchers(HttpMethod.GET,"/media/{mediaId:[\\d+]}").hasAnyAuthority("PROJECT_HOST", "REVIEWER")
-                .antMatchers(HttpMethod.GET,"/media/{mediaId:[\\d+]}/data").hasAnyAuthority("PROJECT_HOST", "REVIEWER")
 
                 // Feedback API
                 .antMatchers(HttpMethod.POST,"/media/{mediaId:[\\d+]}/feedback").hasAuthority("REVIEWER")
