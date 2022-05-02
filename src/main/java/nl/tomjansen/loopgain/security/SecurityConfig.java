@@ -51,16 +51,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
 
-                .antMatchers("/user/projects").hasRole("PROJECT_HOST")
-                .antMatchers("/", "/home").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()
-//                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll()
-//                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/projects/*").fullyAuthenticated()
+                // Project API
+                .antMatchers("/user/projects").hasAuthority("PROJECT_HOST")
+                .antMatchers("/user/projects/{projectId:[\\d+}").hasAuthority("PROJECT_HOST")
 
-                .anyRequest().permitAll()
+                // Media API
+                .antMatchers(HttpMethod.POST,"/project/{projectId:[\\d+]}/media").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.DELETE,"/media/{mediaId:[\\d+]}").hasAuthority("PROJECT_HOST")
+                .antMatchers(HttpMethod.GET,"/media/{mediaId:[\\d+]}").hasAnyAuthority("PROJECT_HOST", "REVIEWER")
+                .antMatchers(HttpMethod.GET,"/media/{mediaId:[\\d+]}/data").hasAnyAuthority("PROJECT_HOST", "REVIEWER")
+
+
+                // Feedback API
+                .antMatchers(HttpMethod.POST,"/media/{mediaId:[\\d+]}/feedback").hasAuthority("REVIEWER")
+                .antMatchers(HttpMethod.DELETE, "/feedback/{feedbackStringId}").hasAuthority("REVIEWER")
+
+                // Auth API
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
+
+//                .anyRequest().permitAll()
 //
                 .and()
-                .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtRequestFilter(jwtService, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
 
                 .csrf().disable()
                 .cors();

@@ -29,14 +29,6 @@ public class FeedbackStringController {
         return new ResponseEntity<>(feedbackStringDto, HttpStatus.OK);
     }
 
-//    @PostMapping("/media/{mediaId}/feedback")
-//    public ResponseEntity<Object> createFeedbackString(@PathVariable Long mediaId) {
-//        Long feedbackStringId = feedbackStringService.createFeedbackString(mediaId);
-//
-//        return new ResponseEntity<>(feedbackStringId,
-//                HttpStatus.CREATED);
-//    }
-
     @PostMapping("/media/{mediaId}/feedback")
     public ResponseEntity<Object> createFilledFeedbackString(
             @PathVariable Long mediaId,

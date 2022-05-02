@@ -8,6 +8,9 @@ import nl.tomjansen.loopgain.service.media.MediaService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +34,12 @@ public class MediaController {
             @PathVariable Long projectId)
             throws IOException {
 
-            Long id = mediaService.saveMedia(fileName, file, projectId);
-            return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails ud = (UserDetails) auth.getPrincipal();
+        System.out.println("Media uploaded by: " + ud.getUsername());
+
+        Long id = mediaService.saveMedia(fileName, file, projectId);
+        return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
     }
 
     // GET ONE FILESTREAM
@@ -55,7 +62,6 @@ public class MediaController {
 
         return new ResponseEntity<>(mediaDto, HttpStatus.OK);
     }
-
 
 
     // GET ALL MEDIAINFO
