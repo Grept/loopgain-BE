@@ -1,6 +1,6 @@
 package nl.tomjansen.loopgain.controller.api;
 
-import jdk.jfr.ContentType;
+import nl.tomjansen.loopgain.config.TestConfig;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.model.user.User;
@@ -10,15 +10,16 @@ import nl.tomjansen.loopgain.service.user.CustomUserDetailsService;
 import nl.tomjansen.loopgain.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.web.JsonPath;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+
 import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -33,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProjectController.class)
-@WithMockUser(username = "Tom", password = "pass123", authorities = "PROJECT_HOST")
+@ContextConfiguration(classes = {TestConfig.class})
 class ProjectControllerTest {
 
     @Autowired
@@ -42,17 +43,7 @@ class ProjectControllerTest {
     @MockBean
     private ProjectService mockProjectService;
 
-//    @MockBean
-//    private JwtService jwtService;
-//
-//    @MockBean
-//    private CustomUserDetailsService customUserDetailsService;
-//
-//    @MockBean
-//    private UserService userService;
-
     private List<ProjectDto> projectList = new ArrayList<>();
-    private User user;
 
     @BeforeEach
     void setUp() {
@@ -106,9 +97,8 @@ class ProjectControllerTest {
 
     @Test
     void createProject() {
-        Mockito
-                .when(mockProjectService.postProject(new ProjectDto()))
-                .thenReturn(3L);
+
+        assertTrue(true);
 
     }
 
