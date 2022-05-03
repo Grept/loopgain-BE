@@ -45,13 +45,6 @@ public class User {
 
     // Ik gebruik hier geen Lombok voor het maken van getters en setters omdat ik voor het veld authorities mijn eigen
     // implementatie gebruiken wil.
-//    public Long getId() {
-//        return id;
-//    }
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-
     public String getUsername() {
         return username;
     }

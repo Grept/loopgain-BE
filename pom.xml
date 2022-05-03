@@ -61,6 +61,14 @@
             <version>0.9.1</version>
         </dependency>
 
+        <!--Deze dependency heb ik toegevoegd om een user te kunnen mocken tijdens testen-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
