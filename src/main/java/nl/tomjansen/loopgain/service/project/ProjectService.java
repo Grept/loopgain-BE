@@ -12,7 +12,5 @@ public interface ProjectService {
 
     public Long postProject(ProjectDto dto);
 
-    public ProjectDto updateProject(ProjectDto dto, Long projectId);
-
     public ProjectDto deleteProject(Long projectId);
 }

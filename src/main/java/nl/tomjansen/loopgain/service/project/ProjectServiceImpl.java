@@ -76,14 +76,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project).getId();
     }
 
-
-    // PUT ONE
-    @Override
-    public ProjectDto updateProject(ProjectDto dto, Long projectId) {
-        return null;
-    }
-
-
     // DELETE ONE
     @Override
     public ProjectDto deleteProject(Long projectId) {
