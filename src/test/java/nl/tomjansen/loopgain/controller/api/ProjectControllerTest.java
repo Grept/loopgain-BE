@@ -9,7 +9,9 @@ import nl.tomjansen.loopgain.service.project.ProjectService;
 import nl.tomjansen.loopgain.service.user.CustomUserDetailsService;
 import nl.tomjansen.loopgain.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -18,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.security.test.context.support.WithMockUser;
@@ -47,7 +50,6 @@ class ProjectControllerTest {
 
     @BeforeEach
     void setUp() {
-
         projectList.add(
                 new ProjectDto()
                         .setId(1L)
@@ -80,8 +82,9 @@ class ProjectControllerTest {
                 .andExpect(content().contentType("List"));
     }
 
-    @Test
 //    @WithMockUser(username = "Tom", password = "Tom", authorities = "PROJECT_HOST")
+    @Test
+    @DisplayName("getProject() should return a ProjectDto")
     void shouldGetProject() throws Exception {
         Mockito
                 .when(mockProjectService.getProject(1L))
