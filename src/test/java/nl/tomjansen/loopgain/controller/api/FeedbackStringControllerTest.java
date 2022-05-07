@@ -1,6 +1,5 @@
 package nl.tomjansen.loopgain.controller.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import nl.tomjansen.loopgain.config.TestConfig;
 import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;

@@ -36,20 +36,10 @@ public class AuthController {
         String username = authDto.getUsername();
         String password = authDto.getPassword();
 
-//        try {
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(username, password)
-//            );
-//        } catch (BadCredentialsException exception) {
-//            throw new Exception("Incorrect username or password", exception);
-//        }
-
         UsernamePasswordAuthenticationToken up = new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword());
         Authentication auth = authenticationManager.authenticate(up);
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
-
-//        UserDetails userDetails = customUserDetailsService.loadUserByUsername(authDto.getUsername());
         String token = jwtService.generateToken(userDetails);
 
         HttpHeaders headers = new HttpHeaders();

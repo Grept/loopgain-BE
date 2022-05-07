@@ -1,12 +1,18 @@
 package nl.tomjansen.loopgain.controller.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import nl.tomjansen.loopgain.config.LocalDateTimeAdapter;
 import nl.tomjansen.loopgain.config.TestConfig;
+import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.service.user.UserService;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,11 +23,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import static org.hamcrest.Matchers.*;
 
 @WebMvcTest(UserController.class)
@@ -30,21 +38,22 @@ import static org.hamcrest.Matchers.*;
 public class UserControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    UserService userService;
+    private UserService userService;
 
-    private final UserDto userDto = new UserDto();
-    private final Gson gson = new Gson();
+    private UserDto userDto = new UserDto();
 
     @BeforeEach
     void setUp() {
         userDto.setUsername("testuser");
         userDto.setPassword("xxx-xxx-xxx");
         userDto.setRole("PROJECT_HOST");
+        userDto.setProjectDtoList(null);
+        userDto.setFeedbackStringDtoList(null);
 
-        System.out.println(gson.toJson(userDto));
+//        System.out.println(gson.toJson(userDto));
 
     }
 
@@ -66,12 +75,27 @@ public class UserControllerTest {
 
     @Test
     void shouldRegisterUser() throws Exception {
-        Mockito.when(userService.createUser(userDto)).thenReturn("testuser");
+        // Gson does not work well with LocalDateTime.
+        // There is a LocalDateTime field nested in the UserDto:
+        // UserDto -> List<ProjectDto> -> List<MediaDto> -> *MediaDto
+        // That is why i have to register a custom TypeAdapter.
+        // (Solution found on stackoverflow by Drux)
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
+
+        String json = gson.toJson(userDto);
+        System.out.println(json);
+
+
+        Mockito.when(userService.createUser(any())).thenReturn("testuser");
+//        Mockito.doReturn(userDto.getUsername()).when(userService).createUser(userDto);
 
         mockMvc
                 .perform(post("/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(userDto)))
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content()
