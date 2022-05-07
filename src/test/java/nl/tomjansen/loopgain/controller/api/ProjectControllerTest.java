@@ -6,6 +6,7 @@ import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.service.project.ProjectService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,15 +18,18 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,7 +37,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProjectController.class)
 @ContextConfiguration(classes = {TestConfig.class})
 @WithMockUser(username = "testuser", password = "123pass", authorities = "PROJECT_HOST")
-@AutoConfigureMockMvc(addFilters = false) // Spring is trying to implement the mocked filter, this is a workaround
+// Spring is trying to implement the mocked filter that is declared in TestConfig.class, disabeling filters this way
+// is a workaround. This is NOT best practice.
+// Better would be to also implement the mocked filter and add that mock to MockMvc (manual configuration of MockMvc
+// would be requiered in this case). But that is beyond the scope of this version of the project.
+@AutoConfigureMockMvc(addFilters = false)
 class ProjectControllerTest {
 
     @Autowired
@@ -63,11 +71,13 @@ class ProjectControllerTest {
     }
 
     @Test
+    @DisplayName("Testing getAllProjects(). Should return a list of 2 ProjectDto's")
     void getAllProjects() throws Exception {
         Mockito.when(projectService.getAllProjects()).thenReturn(Lists.newArrayList(projectDto_1, projectDto_2));
 
         mockMvc
-                .perform(get("/user/projects").contentType(MediaType.APPLICATION_JSON))
+                .perform(get("/user/projects")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -84,6 +94,7 @@ class ProjectControllerTest {
     }
 
     @Test
+    @DisplayName("Testing getProject(). Should return a ProjectDto")
     void getProject() throws Exception {
         Mockito.when(projectService.getProject(1L)).thenReturn(projectDto_1);
 
@@ -92,15 +103,30 @@ class ProjectControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.projectName", is("Test Project 1")));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.projectName", is("Test Project 1")))
+                .andExpect(jsonPath("$.director", is("Director 1")))
+                .andExpect(jsonPath("$.producer", is("Producer 1")))
+                .andExpect(jsonPath("$.projectOwner", is("testuser")));
 
     }
 
     @Test
+    @DisplayName("Testing createProject(). NOT YET IMPLEMENTED")
     void createProject() {
     }
 
     @Test
-    void deleteProject() {
+    @DisplayName("Testing deleteProject. Should return a string naming the deleted project")
+    void deleteProject() throws Exception {
+        Mockito.when(projectService.deleteProject(any())).thenReturn(projectDto_1);
+
+        mockMvc
+                .perform(delete("/user/projects/{projectId}", 1)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .string(containsString("Project with title \"Test Project 1\" was deleted.")));
     }
 }

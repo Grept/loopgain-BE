@@ -23,7 +23,6 @@ import java.io.IOException;
 public class MediaController {
 
     // Dependency Injection via @RequiredArgsConstructor
-    private final MediaRepository mediaRepository;
     private final MediaService mediaService;
 
     // POST ONE MEDIA FILE
@@ -66,7 +65,7 @@ public class MediaController {
 
     // GET ALL MEDIAINFO
     @RequestMapping(value = "/media")
-    public ResponseEntity<Object> getAllMediaInfo() {
+    public ResponseEntity<Object> getAllMediaData() {
         return new ResponseEntity<>(mediaService.getAllMediaInfo(), HttpStatus.OK);
     }
 

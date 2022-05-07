@@ -48,11 +48,6 @@ public class ProjectController {
         return new ResponseEntity<>("Project created with ID#: " + projectId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/projects")
-    public ResponseEntity<?> updateProject() {
-        return null;
-    }
-
     @DeleteMapping("/projects/{projectId}")
     public ResponseEntity<Object> deleteProject(@PathVariable Long projectId) {
 
