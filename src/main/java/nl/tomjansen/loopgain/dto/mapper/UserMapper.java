@@ -6,6 +6,8 @@ import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.model.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;

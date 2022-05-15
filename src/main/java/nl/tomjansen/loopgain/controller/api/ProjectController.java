@@ -33,7 +33,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<Object> createProject(@Valid @RequestBody ProjectRequest projectRequest, BindingResult br) {
+    public ResponseEntity<Object> createProject(@Valid @RequestBody ProjectDto projectDto, BindingResult br) {
         if (br.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : br.getFieldErrors()) {
@@ -43,7 +43,7 @@ public class ProjectController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        Long projectId = projectService.postProject(ProjectMapper.requestToDto(projectRequest));
+        Long projectId = projectService.postProject(projectDto);
 
         return new ResponseEntity<>("Project created with ID#: " + projectId, HttpStatus.CREATED);
     }

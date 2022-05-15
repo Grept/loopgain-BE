@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-
+    // Dependency Injection
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final MediaService mediaService;

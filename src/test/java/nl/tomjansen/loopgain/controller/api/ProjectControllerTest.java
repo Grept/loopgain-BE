@@ -1,5 +1,8 @@
 package nl.tomjansen.loopgain.controller.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import nl.tomjansen.loopgain.config.LocalDateTimeAdapter;
 import nl.tomjansen.loopgain.config.TestConfig;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.model.project.Project;
@@ -22,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +33,16 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.contains;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProjectController.class)
 @ContextConfiguration(classes = {TestConfig.class})
-@WithMockUser(username = "testuser", password = "123pass", authorities = "PROJECT_HOST")
 // Spring is trying to implement the mocked filter that is declared in TestConfig.class, disabeling filters this way
 // is a workaround. This is NOT best practice.
 // Better would be to also implement the mocked filter and add that mock to MockMvc (manual configuration of MockMvc
-// would be requiered in this case). But that is beyond the scope of this version of the project.
+// would be required in this case). But that is beyond the scope of this version of the project.
 @AutoConfigureMockMvc(addFilters = false)
 class ProjectControllerTest {
 
@@ -112,8 +114,23 @@ class ProjectControllerTest {
     }
 
     @Test
-    @DisplayName("Testing createProject(). NOT YET IMPLEMENTED")
-    void createProject() {
+    @DisplayName("Testing createProject(). Should return String with Project ID.")
+    void createProject() throws Exception {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
+        String json = gson.toJson(projectDto_1);
+        Mockito.when(projectService.postProject(any())).thenReturn(projectDto_1.getId());
+
+        mockMvc
+                .perform(post("/user/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString("Project created with ID#: 1")));
+
     }
 
     @Test
