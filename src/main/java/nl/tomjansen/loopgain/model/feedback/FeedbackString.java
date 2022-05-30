@@ -32,22 +32,7 @@ public class FeedbackString {
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//
-//        for(Comment c : commentsList) {
-//            sb
-//                    .append(c.getTimeStamp())
-//                    .append(":/n")
-//                    .append(c.getCommentText())
-//                    .append("/n/n");
-//        }
-//
-//        return sb.toString();
-//    }
-
-//    public void addComment(Comment comment) {
-//        this.commentsList.add(comment);
-//    }
+    public void removeComment(Comment comment) {
+        commentsList.remove(comment);
+    }
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CommentService {
     void saveComment(CommentDto commentDto, Long feedbackStringId);
+    void deleteComment(CommentDto commentDto, Long mediaId);
 }

@@ -8,6 +8,7 @@ import nl.tomjansen.loopgain.model.feedback.Comment;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.repository.feedback.CommentRepository;
 import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final FeedbackStringRepository feedbackStringRepository;
+    private final FeedbackStringService feedbackStringService;
 
     @Override
     public void saveComment(CommentDto commentDto, Long feedbackStringId) {
@@ -37,5 +39,24 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    @Override
+    public void deleteComment(CommentDto commentDto, Long mediaId) {
+        Long feedbackStringId = feedbackStringService.getUserFeedbackString(mediaId).getId();
 
+        Optional<Comment> commentOptional = commentRepository
+                .findCommentByCommentTextAndTimeStampAndFeedbackStringId(
+                        commentDto.getCommentText(),
+                        commentDto.getTimeStamp(),
+                        feedbackStringId);
+
+        if(commentOptional.isPresent()) {
+            // First delete comment from commentList in associated FeedbackString
+            feedbackStringService.deleteCommentFromFeedbackString(commentOptional.get(), feedbackStringId);
+
+            // Then delete comment entity form DB
+            commentRepository.deleteById(commentOptional.get().getId());
+        } else {
+            throw new RecordNotFoundException("Comment was not found. Nothing deleted.");
+        }
+    }
 }
