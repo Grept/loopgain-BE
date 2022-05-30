@@ -18,9 +18,6 @@ import java.util.Set;
 @Entity
 public class User {
 
-//    @Column(columnDefinition = "serial")
-//    private Long id;
-
     @Id
     private String username;
 

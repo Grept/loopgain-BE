@@ -9,7 +9,6 @@ import nl.tomjansen.loopgain.service.feedback.FeedbackStringService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -70,7 +67,7 @@ class FeedbackStringControllerTest {
     @Test
     @DisplayName("Testing getFeedbackString(). Should return a feedbackStringDto & 200")
     void getFeedbackString() throws Exception {
-        Mockito.when(feedbackStringService.getFeedbackString(any())).thenReturn(feedbackStringDto);
+        Mockito.when(feedbackStringService.getUserFeedbackString(any())).thenReturn(feedbackStringDto);
 
         mockMvc
                 .perform(get("/feedback/{feedbackStringId}", 1))
@@ -85,7 +82,7 @@ class FeedbackStringControllerTest {
 
     @Test
     void createFilledFeedbackString() throws Exception {
-        Mockito.when(feedbackStringService.createFilledFeedbackString(any(), any())).thenReturn(feedbackStringDto);
+        Mockito.when(feedbackStringService.createFilledFeedbackString(any(), any())).thenReturn(feedbackStringDto.getId());
 
         mockMvc
                 .perform(post("/media/{mediaId}/feedback", 1)

@@ -3,13 +3,9 @@ package nl.tomjansen.loopgain.controller.api;
 import lombok.RequiredArgsConstructor;
 import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
-import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.service.feedback.FeedbackStringService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +17,10 @@ public class FeedbackStringController {
 
     private final FeedbackStringService feedbackStringService;
 
-    @GetMapping("/feedback/{feedbackStringId}")
-    public ResponseEntity<Object> getFeedbackString(@PathVariable Long feedbackStringId) {
+    @GetMapping("/feedback/{mediaId}")
+    public ResponseEntity<Object> getFeedbackString(@PathVariable Long mediaId) {
 
-        FeedbackStringDto feedbackStringDto = feedbackStringService.getFeedbackString(feedbackStringId);
+        FeedbackStringDto feedbackStringDto = feedbackStringService.getUserFeedbackString(mediaId);
 
         return new ResponseEntity<>(feedbackStringDto, HttpStatus.OK);
     }
@@ -34,9 +30,9 @@ public class FeedbackStringController {
             @PathVariable Long mediaId,
             @RequestBody List<CommentDto> commentList) {
 
-        FeedbackStringDto feedbackStringDto = feedbackStringService.createFilledFeedbackString(mediaId, commentList);
+        Long feedbackStringId = feedbackStringService.createFilledFeedbackString(mediaId, commentList);
 
-        return new ResponseEntity<>(feedbackStringDto, HttpStatus.CREATED);
+        return new ResponseEntity<>("FeedbackString created with ID: " + feedbackStringId, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/feedback/{feedbackStringId}")

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface FeedbackStringService {
 
-    public FeedbackStringDto getFeedbackString(Long id);
+    public FeedbackStringDto getUserFeedbackString(Long id);
 
     public Long createFeedbackString(Long mediaId);
 
     public Long deleteFeedbackString(Long id);
 
-    FeedbackStringDto createFilledFeedbackString(Long mediaId, List<CommentDto> commentList);
+    public Long createFilledFeedbackString(Long mediaId, List<CommentDto> commentList);
 }

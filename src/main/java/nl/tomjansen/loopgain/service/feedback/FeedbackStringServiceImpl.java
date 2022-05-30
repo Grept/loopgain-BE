@@ -29,8 +29,12 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
     private final UserRepository userRepository;
 
     @Override
-    public FeedbackStringDto getFeedbackString(Long id) {
-        Optional<FeedbackString> feedbackStringOptional = feedbackStringRepository.findById(id);
+    public FeedbackStringDto getUserFeedbackString(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+
+        Optional<FeedbackString> feedbackStringOptional = feedbackStringRepository.findFeedbackStringByMediaFileIdAndReviewerUsername(id, userDetails.getUsername());
+
         if(feedbackStringOptional.isPresent()) {
             return FeedbackStringMapper.entityToDto(feedbackStringOptional.get());
         } else {
@@ -62,6 +66,28 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
     }
 
     @Override
+    public Long createFilledFeedbackString(Long mediaId, List<CommentDto> commentList) {
+        // Check if MediaFile already has a feedbackstring from this user.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+
+        Optional<FeedbackString> feedbackStringOptional = feedbackStringRepository.findFeedbackStringByMediaFileIdAndReviewerUsername(mediaId, userDetails.getUsername());
+        Long feedbackStringId;
+        if(feedbackStringOptional.isPresent()) {
+            feedbackStringId = feedbackStringOptional.get().getId();
+        } else {
+            feedbackStringId = createFeedbackString(mediaId);
+        }
+
+
+        for(CommentDto commentDto : commentList) {
+            commentService.saveComment(commentDto, feedbackStringId);
+        }
+
+        return feedbackStringId;
+    }
+
+    @Override
     public Long deleteFeedbackString(Long feedbackStringId) {
         Optional<FeedbackString> feedbackString = feedbackStringRepository.findById(feedbackStringId);
         if (feedbackString.isPresent()) {
@@ -70,17 +96,5 @@ public class FeedbackStringServiceImpl implements FeedbackStringService{
         } else {
             throw new RecordNotFoundException(String.format("FeedbackString with ID: %d was not found.", feedbackStringId));
         }
-    }
-
-    @Override
-    public FeedbackStringDto createFilledFeedbackString(Long mediaId, List<CommentDto> commentList) {
-        Long feedbackStringId = createFeedbackString(mediaId);
-
-        for(CommentDto commentDto : commentList) {
-            commentService.saveComment(commentDto, feedbackStringId);
-        }
-
-        return getFeedbackString(feedbackStringId);
-
     }
 }

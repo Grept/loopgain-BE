@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final FeedbackStringRepository feedbackStringRepository;
@@ -24,10 +24,14 @@ public class CommentServiceImpl implements CommentService{
     public void saveComment(CommentDto commentDto, Long feedbackStringId) {
         Optional<FeedbackString> feedbackStringOptional = feedbackStringRepository.findById(feedbackStringId);
 
-        if(feedbackStringOptional.isPresent()) {
-            Comment comment = CommentMapper.dtoToEntity(commentDto);
-            comment.setFeedbackString(feedbackStringOptional.get());
-            commentRepository.save(comment);
+        if (feedbackStringOptional.isPresent()) {
+
+            // Check if a comment already exists
+            if (!commentRepository.existsCommentByCommentTextAndTimeStamp(commentDto.getCommentText(), commentDto.getTimeStamp())) {
+                Comment comment = CommentMapper.dtoToEntity(commentDto);
+                comment.setFeedbackString(feedbackStringOptional.get());
+                commentRepository.save(comment);
+            }
         } else {
             throw new RecordNotFoundException(String.format("FeedbackString with ID: %d was not found", feedbackStringId));
         }
