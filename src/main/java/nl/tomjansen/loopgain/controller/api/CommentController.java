@@ -1,7 +1,6 @@
 package nl.tomjansen.loopgain.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgain.service.feedback.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
