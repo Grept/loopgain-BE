@@ -62,6 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
         // Create a new Project Entity with the ProjectMapper.dtoToEntity() method.
         // Use the repo to save entity to the db. This also returns an entity.
         // Call the getId() method in order to return the Id to the controller api.
+
         Project project = ProjectMapper.dtoToEntity(projectDto);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

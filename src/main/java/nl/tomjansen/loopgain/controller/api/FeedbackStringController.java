@@ -17,7 +17,7 @@ public class FeedbackStringController {
 
     private final FeedbackStringService feedbackStringService;
 
-    @GetMapping("/feedback/{mediaId}")
+    @GetMapping("/media/{mediaId}/feedback")
     public ResponseEntity<Object> getFeedbackString(@PathVariable Long mediaId) {
 
         FeedbackStringDto feedbackStringDto = feedbackStringService.getUserFeedbackString(mediaId);

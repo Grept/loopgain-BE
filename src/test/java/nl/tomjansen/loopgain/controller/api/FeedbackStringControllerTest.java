@@ -29,7 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FeedbackStringController.class)
+
 @ContextConfiguration(classes = {TestConfig.class})
+
 @AutoConfigureMockMvc(addFilters = false)
 @WithMockUser(username = "testuser", password = "123pass", authorities = "REVIEWER")
 class FeedbackStringControllerTest {
@@ -70,7 +72,7 @@ class FeedbackStringControllerTest {
         Mockito.when(feedbackStringService.getUserFeedbackString(any())).thenReturn(feedbackStringDto);
 
         mockMvc
-                .perform(get("/feedback/{feedbackStringId}", 1))
+                .perform(get("/media/{mediaId}/feedback", 1))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -90,11 +92,7 @@ class FeedbackStringControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.commentList", hasSize(2)))
-                .andExpect(jsonPath("$.commentList[0].commentText", is("Comment 1")))
-                .andExpect(jsonPath("$.mediaDto.fileName", is("Media File 1")))
-                .andExpect(jsonPath("$.reviewer", is("testuser"))).andReturn();
+                .andExpect(content().string(containsString("FeedbackString created with ID: " + 1L)));
 
 
     }

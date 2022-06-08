@@ -8,10 +8,8 @@ import nl.tomjansen.loopgain.model.feedback.Comment;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.repository.feedback.CommentRepository;
 import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,14 +38,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(CommentDto commentDto, Long mediaId) {
+    public void deleteComment(Long mediaId, Long commentId) {
         Long feedbackStringId = feedbackStringService.getUserFeedbackString(mediaId).getId();
 
-        Optional<Comment> commentOptional = commentRepository
-                .findCommentByCommentTextAndTimeStampAndFeedbackStringId(
-                        commentDto.getCommentText(),
-                        commentDto.getTimeStamp(),
-                        feedbackStringId);
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
 
         if(commentOptional.isPresent()) {
             // First delete comment from commentList in associated FeedbackString
@@ -59,4 +53,23 @@ public class CommentServiceImpl implements CommentService {
             throw new RecordNotFoundException("Comment was not found. Nothing deleted.");
         }
     }
+
+    @Override
+    public Long getCommentId(CommentDto commentDto, Long mediaId) {
+        Long feedbackStringId = feedbackStringService.getUserFeedbackString(mediaId).getId();
+
+        Optional<Comment> commentOptional = commentRepository
+                .findCommentByCommentTextAndTimeStampAndFeedbackStringId(
+                        commentDto.getCommentText(),
+                        commentDto.getTimeStamp(),
+                        feedbackStringId);
+
+        if (commentOptional.isPresent()) {
+            return commentOptional.get().getId();
+        } else {
+            throw new RecordNotFoundException("Comment not found.");
+        }
+    }
+
+
 }

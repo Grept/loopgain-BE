@@ -5,6 +5,8 @@ import nl.tomjansen.loopgain.dto.model.media.MediaDto;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.model.media.Media;
 import nl.tomjansen.loopgain.model.project.Project;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,13 @@ public abstract class ProjectMapper {
                 .setProjectMedia(mediaDtoList);
     }
 
-    public static ProjectDto requestToDto(ProjectRequest projectRequest) {
-        return new ProjectDto()
-                .setProjectName(projectRequest.getProjectName())
-                .setDirector(projectRequest.getDirector())
-                .setProducer(projectRequest.getProducer());
-//                .setProjectOwner(new User());
-    }
+//    public static ProjectDto requestToDto(ProjectRequest projectRequest) {
+//        return new ProjectDto()
+//                .setProjectName(projectRequest.getProjectName())
+//                .setDirector(projectRequest.getDirector())
+//                .setProducer(projectRequest.getProducer());
+////                .setProjectOwner(new User());
+//    }
 
     public static Project dtoToEntity(ProjectDto projectDto) {
         return new Project()
