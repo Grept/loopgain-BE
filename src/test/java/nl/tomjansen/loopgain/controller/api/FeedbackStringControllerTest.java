@@ -29,9 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FeedbackStringController.class)
-
 @ContextConfiguration(classes = {TestConfig.class})
-
 @AutoConfigureMockMvc(addFilters = false)
 @WithMockUser(username = "testuser", password = "123pass", authorities = "REVIEWER")
 class FeedbackStringControllerTest {
@@ -46,7 +44,6 @@ class FeedbackStringControllerTest {
     private final List<CommentDto> commentDtoList = new ArrayList<>();
 
     private final Gson gson = new Gson();
-
 
     @BeforeEach
     void setUp() {

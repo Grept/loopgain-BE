@@ -5,5 +5,4 @@ import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 public interface CommentService {
     void saveComment(CommentDto commentDto, Long feedbackStringId);
     void deleteComment(Long mediaId, Long commentId);
-    Long getCommentId(CommentDto commentDto, Long mediaId);
 }

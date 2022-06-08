@@ -1,2 +1,0 @@
-This package holds request models. These are classes that could also be called
-InputDto's. They are like a DTO but their purpose is to also validate incomming data.

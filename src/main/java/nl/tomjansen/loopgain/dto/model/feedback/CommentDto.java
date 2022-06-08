@@ -2,10 +2,8 @@ package nl.tomjansen.loopgain.dto.model.feedback;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Getter
 @Setter

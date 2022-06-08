@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import nl.tomjansen.loopgain.dto.model.feedback.FeedbackStringDto;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
-import nl.tomjansen.loopgain.model.feedback.FeedbackString;
-
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;

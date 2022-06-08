@@ -4,15 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tomjansen.loopgain.config.LocalDateTimeAdapter;
 import nl.tomjansen.loopgain.config.TestConfig;
-import nl.tomjansen.loopgain.dto.model.feedback.CommentDto;
 import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.service.user.UserService;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,9 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.time.LocalDateTime;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -52,9 +46,6 @@ public class UserControllerTest {
         userDto.setRole("PROJECT_HOST");
         userDto.setProjectDtoList(null);
         userDto.setFeedbackStringDtoList(null);
-
-//        System.out.println(gson.toJson(userDto));
-
     }
 
     @AfterEach
@@ -75,11 +66,11 @@ public class UserControllerTest {
 
     @Test
     void shouldRegisterUser() throws Exception {
-        // Gson does not work well with LocalDateTime.
-        // There is a LocalDateTime field nested in the UserDto:
-        // UserDto -> List<ProjectDto> -> List<MediaDto> -> *MediaDto
-        // That is why i have to register a custom TypeAdapter.
-        // (Solution found on stackoverflow by Drux)
+        /* Gson does not work well with LocalDateTime.
+         There is a LocalDateTime field nested in the UserDto:
+         UserDto -> List<ProjectDto> -> List<MediaDto> -> *MediaDto
+         That is why I have to register a custom TypeAdapter.
+         (Solution found on stackoverflow by Drux)*/
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
@@ -90,8 +81,6 @@ public class UserControllerTest {
 
 
         Mockito.when(userService.createUser(any())).thenReturn("testuser");
-//        Mockito.doReturn(userDto.getUsername()).when(userService).createUser(userDto);
-
         mockMvc
                 .perform(post("/register")
                         .content(json)

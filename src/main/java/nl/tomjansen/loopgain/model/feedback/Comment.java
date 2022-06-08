@@ -3,10 +3,7 @@ package nl.tomjansen.loopgain.model.feedback;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Instant;
 
 @Getter
 @Setter

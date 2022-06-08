@@ -9,7 +9,6 @@ import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.repository.feedback.CommentRepository;
 import nl.tomjansen.loopgain.repository.feedback.FeedbackStringRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -53,23 +52,4 @@ public class CommentServiceImpl implements CommentService {
             throw new RecordNotFoundException("Comment was not found. Nothing deleted.");
         }
     }
-
-    @Override
-    public Long getCommentId(CommentDto commentDto, Long mediaId) {
-        Long feedbackStringId = feedbackStringService.getUserFeedbackString(mediaId).getId();
-
-        Optional<Comment> commentOptional = commentRepository
-                .findCommentByCommentTextAndTimeStampAndFeedbackStringId(
-                        commentDto.getCommentText(),
-                        commentDto.getTimeStamp(),
-                        feedbackStringId);
-
-        if (commentOptional.isPresent()) {
-            return commentOptional.get().getId();
-        } else {
-            throw new RecordNotFoundException("Comment not found.");
-        }
-    }
-
-
 }

@@ -5,44 +5,33 @@ import com.google.gson.GsonBuilder;
 import nl.tomjansen.loopgain.config.LocalDateTimeAdapter;
 import nl.tomjansen.loopgain.config.TestConfig;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
-import nl.tomjansen.loopgain.model.project.Project;
 import nl.tomjansen.loopgain.service.project.ProjectService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.sql.Array;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProjectController.class)
 @ContextConfiguration(classes = {TestConfig.class})
-// Spring is trying to implement the mocked filter that is declared in TestConfig.class, disabeling filters this way
-// is a workaround. This is NOT best practice.
-// Better would be to also implement the mocked filter and add that mock to MockMvc (manual configuration of MockMvc
-// would be required in this case). But that is beyond the scope of this version of the project.
+/* Spring is trying to implement the mocked filter that is declared in TestConfig.class, disabling filters this way
+ is a workaround. This is NOT best practice.
+ Better would be to also implement the mocked filter and add that mock to MockMvc (manual configuration of MockMvc
+ would be required in this case). But that is beyond the scope of this version of the project.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 class ProjectControllerTest {
 

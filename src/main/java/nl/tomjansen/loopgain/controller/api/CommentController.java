@@ -15,20 +15,11 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/comments")
-    public ResponseEntity<Object> getCommentId(@RequestBody CommentDto commentDto, @PathVariable Long mediaId) {
-
-        Long commentId = commentService.getCommentId(commentDto, mediaId);
-
-        return new ResponseEntity<>(commentId, HttpStatus.FOUND);
-    }
-
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Object> deleteComment(@PathVariable Long mediaId, @PathVariable Long commentId) {
 
         commentService.deleteComment(mediaId, commentId);
 
-        return new ResponseEntity<>("Deleted a comment.",
-                HttpStatus.OK);
+        return new ResponseEntity<>("Deleted a comment.", HttpStatus.OK);
     }
 }

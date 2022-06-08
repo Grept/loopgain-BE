@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface MediaService {
     Long saveMedia(String fileName, MultipartFile file, Long projectId) throws IOException;
-
     MediaDto getMedia(Long id);
-
     List<MediaDto> getAllMediaInfo();
-
     MediaDto deleteFile(Long mediaId);
 }

@@ -1,7 +1,6 @@
 package nl.tomjansen.loopgain.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import nl.tomjansen.loopgain.controller.request.ProjectRequest;
 import nl.tomjansen.loopgain.dto.mapper.ProjectMapper;
 import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import nl.tomjansen.loopgain.service.project.ProjectService;
@@ -19,7 +18,6 @@ import javax.validation.Valid;
 @RequestMapping(value = "/user")
 public class ProjectController {
 
-    // Dependency Injection via @RequiredArgsConstructor
     private final ProjectService projectService;
 
     @GetMapping("/projects")
@@ -53,7 +51,7 @@ public class ProjectController {
 
         ProjectDto projectDto = projectService.deleteProject(projectId);
 
-        return new ResponseEntity<Object>(String.format(
+        return new ResponseEntity<>(String.format(
                 "Project with title \"%s\" was deleted.",
                 projectDto.getProjectName()
         ), HttpStatus.OK);

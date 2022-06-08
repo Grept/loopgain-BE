@@ -8,7 +8,5 @@ public class LoopgainApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LoopgainApplication.class, args);
-
     }
-
 }

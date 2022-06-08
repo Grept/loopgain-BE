@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    public boolean existsCommentByCommentTextAndTimeStamp(String commentText, Double timeStamp);
-    public Optional<Comment> findCommentByCommentTextAndTimeStamp(String commentText, Double timeStamp);
-    public Optional<Comment> findCommentByCommentTextAndTimeStampAndFeedbackStringId(String commentText, Double timeStamp, Long fbsId);
-
+    boolean existsCommentByCommentTextAndTimeStamp(String commentText, Double timeStamp);
+    Optional<Comment> findCommentByCommentTextAndTimeStampAndFeedbackStringId(String commentText, Double timeStamp, Long fbsId);
 }

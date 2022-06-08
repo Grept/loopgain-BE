@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.project.Project;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@Getter
-//@Setter
 @NoArgsConstructor
 @Table(name = "users")
 @Entity
@@ -31,7 +28,9 @@ public class User {
     @JsonIgnore
     private List<Project> projectList = new ArrayList<>();
 
-    // Ik gebruik hier een Set ipv een List. Een list kan duplicate waardes bevatten en een set alleen unieke waardes.
+    /*
+    * I use a Set instead of a List. A list can contain duplicate values, a set can only hold unique values.
+    * */
     @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
@@ -40,8 +39,10 @@ public class User {
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
-    // Ik gebruik hier geen Lombok voor het maken van getters en setters omdat ik voor het veld authorities mijn eigen
-    // implementatie gebruiken wil.
+    /*
+    * In this case I don't use Lombok to provide Getters and Setters beceause I want to use my own implementations to
+    * get and set the autorities field.
+    * */
     public String getUsername() {
         return username;
     }

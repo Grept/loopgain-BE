@@ -14,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    // Dependency Injection
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final MediaService mediaService;
@@ -32,7 +30,6 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDto> getAllProjects() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
-//        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 
         List<Project> projectList = projectRepository.findAllByProjectOwner_Username(userDetails.getUsername());
         List<ProjectDto> projectDtoList = new ArrayList<>();
@@ -59,15 +56,10 @@ public class ProjectServiceImpl implements ProjectService {
     // POST ONE
     @Override
     public Long postProject(ProjectDto projectDto) {
-        // Create a new Project Entity with the ProjectMapper.dtoToEntity() method.
-        // Use the repo to save entity to the db. This also returns an entity.
-        // Call the getId() method in order to return the Id to the controller api.
-
         Project project = ProjectMapper.dtoToEntity(projectDto);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        System.out.println(userDetails.getUsername());
 
         Optional<User> userOptional = userRepository.findUserByUsername(userDetails.getUsername());
         if(userOptional.isPresent()) {

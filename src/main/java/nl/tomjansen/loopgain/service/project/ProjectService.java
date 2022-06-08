@@ -5,12 +5,8 @@ import nl.tomjansen.loopgain.dto.model.project.ProjectDto;
 import java.util.List;
 
 public interface ProjectService {
-
-    public List<ProjectDto> getAllProjects();
-
-    public ProjectDto getProject(Long id);
-
-    public Long postProject(ProjectDto dto);
-
-    public ProjectDto deleteProject(Long projectId);
+    List<ProjectDto> getAllProjects();
+    ProjectDto getProject(Long id);
+    Long postProject(ProjectDto dto);
+    ProjectDto deleteProject(Long projectId);
 }

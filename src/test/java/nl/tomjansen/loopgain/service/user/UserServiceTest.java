@@ -5,19 +5,15 @@ import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.model.user.Authority;
 import nl.tomjansen.loopgain.model.user.User;
 import nl.tomjansen.loopgain.repository.user.UserRepository;
-import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 

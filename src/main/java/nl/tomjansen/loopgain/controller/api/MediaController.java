@@ -22,7 +22,6 @@ import java.io.IOException;
 @CrossOrigin(value = "http://localhost:3000/")
 public class MediaController {
 
-    // Dependency Injection via @RequiredArgsConstructor
     private final MediaService mediaService;
 
     // POST ONE MEDIA FILE
@@ -32,10 +31,6 @@ public class MediaController {
             @RequestParam String fileName,
             @PathVariable Long projectId)
             throws IOException {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails ud = (UserDetails) auth.getPrincipal();
-        System.out.println("Media uploaded by: " + ud.getUsername());
 
         Long id = mediaService.saveMedia(fileName, file, projectId);
         return new ResponseEntity<>("Media saved with ID: " + id, HttpStatus.CREATED);
@@ -61,7 +56,6 @@ public class MediaController {
 
         return new ResponseEntity<>(mediaDto, HttpStatus.OK);
     }
-
 
     // GET ALL MEDIAINFO
     @RequestMapping(value = "/media")

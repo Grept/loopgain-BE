@@ -6,7 +6,6 @@ import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.media.Media;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +21,11 @@ public abstract class MediaMapper {
     }
 
     public static MediaDto entityToDto(Media entity, InputStreamResource inputStreamResource) {
-
-        // inputStreamResource wordt hier als argument meegegeven aan de methode in plaats van opgehaald via het
-        // media object. De inputStreamResource wordt opgebouwd met behulp van de contentStore.
-        // Via dependency injection zouden we deze contentStore de klasse in injecteren maar omdat deze methode static
-        // is zou ook de contentStore static moeten zijn als we hem willen gebruiken.
-        // Een static field injecteren gaat een beetje voorbij aan het idee van dependency injection. Daarom geven we
-        // de inputStreamResource mee als argument, dan hoeven we geen contentStore te Autowiren.
-
+        /*
+        * The inputStreamResource is passed to the mapper method as an argument. This way I keep external control over
+        * whether or not the Media DTO gets an inputStream or not. Sometimes I just want to send metadata, and not the
+        * stream, in those cases I can pass in null; when I do want a stream in the DTO we provide it as an argument.
+        */
         List<FeedbackStringDto> feedbackStringDtoList = new ArrayList<>();
 
         for (FeedbackString feedbackString : entity.getFeedbackCollection()) {
@@ -49,6 +45,5 @@ public abstract class MediaMapper {
                 .setProjectHost(entity.getProject().getProjectOwner().getUsername())
                 .setFeedbackStringDtoList(feedbackStringDtoList)
                 .setInputStreamResource(inputStreamResource);
-
     }
 }

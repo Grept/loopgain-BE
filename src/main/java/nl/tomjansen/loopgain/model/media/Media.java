@@ -8,7 +8,6 @@ import nl.tomjansen.loopgain.model.feedback.FeedbackString;
 import nl.tomjansen.loopgain.model.project.Project;
 import org.springframework.content.commons.annotations.ContentId;
 import org.springframework.content.commons.annotations.ContentLength;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,5 +44,4 @@ public class Media {
     private long contentLength;
 
     private String contentMimeType = "";
-
 }

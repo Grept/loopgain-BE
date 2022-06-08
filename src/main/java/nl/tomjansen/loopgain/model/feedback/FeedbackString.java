@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.tomjansen.loopgain.model.media.Media;
 import nl.tomjansen.loopgain.model.user.User;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

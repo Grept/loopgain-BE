@@ -24,11 +24,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody UserDto userDto) {
-        System.out.println(String.format("DTO role: %s", userDto.getRole()));
-
         String username = userService.createUser(userDto);
 
-        return new ResponseEntity<Object>(String.format("Created new user with ID: %s.", username), HttpStatus.CREATED);
+        return new ResponseEntity<>(String.format("Created new user with ID: %s.", username), HttpStatus.CREATED);
     }
 
 }

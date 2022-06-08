@@ -13,7 +13,6 @@ import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,6 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Long saveMedia(String fileName, MultipartFile file, Long projectId) throws IOException {
-
         Optional<Project> projectOptional = projectRepository.findById(projectId);
 
         if (projectOptional.isPresent()) {
@@ -62,7 +60,9 @@ public class MediaServiceImpl implements MediaService {
         List<MediaDto> mediaDtoList = new ArrayList<>();
 
         for (Media m : mediaList) {
-            // We geven hier geen inputstream mee aan de dto's.
+            /*
+            * The DTO's don't get an inputstream in this case so we pass null to the MapperClass method.
+            */
             mediaDtoList.add(MediaMapper.entityToDto(m, null));
         }
 
@@ -71,6 +71,10 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public MediaDto deleteFile(Long mediaId) {
+        /*
+        * This method first deletes the Media file from the filesystem. Then it deletes the media entity from the
+        * database.
+        */
         Optional<Media> mediaOptional = mediaRepository.findById(mediaId);
         if (mediaOptional.isPresent()) {
             System.out.printf(

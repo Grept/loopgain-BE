@@ -1,33 +1,24 @@
 package nl.tomjansen.loopgain.controller.api;
 
-import com.fasterxml.jackson.core.util.ByteArrayBuilder;
 import nl.tomjansen.loopgain.config.TestConfig;
 import nl.tomjansen.loopgain.dto.model.media.MediaDto;
-import nl.tomjansen.loopgain.model.media.Media;
 import nl.tomjansen.loopgain.service.media.MediaService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -47,7 +38,6 @@ class MediaControllerTest {
 
     private MediaDto mediaDto_1;
     private MediaDto mediaDto_2;
-
 
     @BeforeEach
     void setUp() {

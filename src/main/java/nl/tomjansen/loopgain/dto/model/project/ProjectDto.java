@@ -5,9 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import nl.tomjansen.loopgain.dto.model.media.MediaDto;
-import nl.tomjansen.loopgain.dto.model.user.UserDto;
-import nl.tomjansen.loopgain.model.user.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +18,10 @@ public class ProjectDto {
     private String director;
     private String producer;
 
-    // Om een stackoverflow error te voorkomen bevat de ProjectDto niet een UserDto
-    // maar slechts een string met de username. Mocht het nodig zijn om aan de hand van een project de user op te halen
-    // kan dat middels de username geimplementeerd worden.
+    /*
+    * To avoid a stackoverflow error the ProjectDto does not contain a UserDto field. Instead it just holds a String
+    * with the username of the associated user. This username can be used to fetch userdata if required.
+    * */
     private String projectOwner;
     private List<MediaDto> projectMedia = new ArrayList<>();
 }

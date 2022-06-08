@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -31,7 +30,6 @@ public class UserServiceImpl implements UserService{
         Optional<User> userOptional = userRepository.findUserByUsername(userDetails.getUsername());
 
         if(userOptional.isPresent()) {
-
             return UserMapper.entityToDto(userOptional.get());
         } else {
             throw new RecordNotFoundException(String.format("User with username:'%s' was not found", userDetails.getUsername()));
@@ -42,8 +40,10 @@ public class UserServiceImpl implements UserService{
     public String createUser(UserDto userDto) {
 
         if(!userRepository.existsByUsername(userDto.getUsername())) {
-            // Ik gebruik hier geen mapper omdat we een de methodes in de mapper static zijn en het niet lukt om een bean
-            // te gebruiken van de passwordEncoder.
+            /*
+            * Normally I use a MapperClass to map a DTO to an Entity but in this case it is easier to do the mapping
+            * manually beceause we also need a passwordEncoder bean to encode the password.
+            */
             User user = new User();
             user.setUsername(userDto.getUsername());
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
