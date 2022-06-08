@@ -8,6 +8,7 @@ import nl.tomjansen.loopgain.dto.model.user.UserDto;
 import nl.tomjansen.loopgain.service.user.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,9 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Testing UserController.getUserData(). Should return JSON + status 200 OK")
     @WithMockUser(username = "testuser", password = "123pass", authorities = "PROJECT_HOST")
-    void shouldGetUserData() throws Exception {
+    void getUserDataTest() throws Exception {
         Mockito.when(userService.getUserData()).thenReturn(userDto);
 
         mockMvc
@@ -65,7 +67,8 @@ public class UserControllerTest {
     }
 
     @Test
-    void shouldRegisterUser() throws Exception {
+    @DisplayName("Testing UserController.registerUser(). Should return JSON + status 201 CREATED")
+    void registerUserTest() throws Exception {
         /* Gson does not work well with LocalDateTime.
          There is a LocalDateTime field nested in the UserDto:
          UserDto -> List<ProjectDto> -> List<MediaDto> -> *MediaDto
@@ -77,8 +80,6 @@ public class UserControllerTest {
                 .create();
 
         String json = gson.toJson(userDto);
-        System.out.println(json);
-
 
         Mockito.when(userService.createUser(any())).thenReturn("testuser");
         mockMvc

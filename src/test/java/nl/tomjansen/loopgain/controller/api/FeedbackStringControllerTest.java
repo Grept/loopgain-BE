@@ -18,10 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -64,8 +62,8 @@ class FeedbackStringControllerTest {
     }
 
     @Test
-    @DisplayName("Testing getFeedbackString(). Should return a feedbackStringDto & 200")
-    void getFeedbackString() throws Exception {
+    @DisplayName("Testing FeedbackStringController.getFeedbackString(). Should return a RE with JSON and status 200 OK")
+    void getFeedbackStringTest() throws Exception {
         Mockito.when(feedbackStringService.getUserFeedbackString(any())).thenReturn(feedbackStringDto);
 
         mockMvc
@@ -80,7 +78,8 @@ class FeedbackStringControllerTest {
     }
 
     @Test
-    void createFilledFeedbackString() throws Exception {
+    @DisplayName("Testing FeedbackStringController.createFilledFeedbackString(). Should return a RE with message containing ID and status 200 OK")
+    void createFilledFeedbackStringTest() throws Exception {
         Mockito.when(feedbackStringService.createFilledFeedbackString(any(), any())).thenReturn(feedbackStringDto.getId());
 
         mockMvc
@@ -90,12 +89,11 @@ class FeedbackStringControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().string(containsString("FeedbackString created with ID: " + 1L)));
-
-
     }
 
     @Test
-    void deleteFeedbackString() throws Exception {
+    @DisplayName("Testing FeedbackStringController.deleteFeedbackString(). Should return a RE with message containing ID and status 200 OK")
+    void deleteFeedbackStringTest() throws Exception {
         Mockito.when(feedbackStringService.deleteFeedbackString(any())).thenReturn(1L);
 
         mockMvc

@@ -63,7 +63,8 @@ class ProjectServiceTest {
     }
 
     @Test
-    void getAllProjects() {
+    @DisplayName("Testing ProjectService.getAllProjects(). Should return a list of ProjectDto's.")
+    void getAllProjectsTest() {
         doReturn(Arrays.asList(project_1, project_2))
                 .when(projectRepository).findAllByProjectOwner_Username("testuser");
 
@@ -73,8 +74,8 @@ class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("Testing getProject() Succes")
-    void getProject() {
+    @DisplayName("Testing ProjectService.getProject() - SUCCES. Should return a single ProjectDto.")
+    void getProjectTest() {
         Mockito.when(projectRepository.findById(1L)).thenReturn(Optional.of(project_1));
 
         ProjectDto returnedProjectDto = projectService.getProject(1L);
@@ -103,8 +104,8 @@ class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("Testing getProject() Not Found")
-    void getProjectNotFound() {
+    @DisplayName("Testing ProjectService.getProject() - NOT FOUND. Should return a a RecordNotFoundException with message.")
+    void getProjectExceptionTest() {
         Mockito.when(projectRepository.findById(1L)).thenReturn(Optional.empty());
 
         RecordNotFoundException exception = assertThrows(RecordNotFoundException.class, () -> projectService.getProject(1L));
@@ -113,8 +114,8 @@ class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("Testing postProject()")
-    void postProject() {
+    @DisplayName("Testing ProjectService.postProject(). Should return a Long (projectId).")
+    void postProjectTest() {
         // Mock repositories
         Mockito.when(projectRepository.save(any())).thenReturn(project_1);
         Mockito.when(userRepository.findUserByUsername("testuser")).thenReturn(Optional.of(user));
@@ -127,8 +128,8 @@ class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("Testing deleteProject()")
-    void deleteProject() {
+    @DisplayName("Testing ProjectService.deleteProject(). Should return a ProjectDto.")
+    void deleteProjectTest() {
         Mockito.when(projectRepository.findById(1L)).thenReturn(Optional.of(project_1));
         Mockito.when(mediaService.deleteFile(any())).thenReturn(null);
 

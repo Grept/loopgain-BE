@@ -37,8 +37,8 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Testing getUserData()")
-    void getUserData() {
+    @DisplayName("Testing UserService.getUserData(). Should return a UserDto.")
+    void getUserDataTest() {
         Mockito.when(userRepository.findUserByUsername("testuser")).thenReturn(Optional.of(user));
 
         UserDto returnedUser = userService.getUserData();
@@ -48,8 +48,8 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Testing creatUser()")
-    void createUser() {
+    @DisplayName("Testing UserService.creatUser(). Should return a username.")
+    void createUserTest() {
         Mockito.when(userRepository.save(any())).thenReturn(user);
 
         String username = userService.createUser(UserMapper.entityToDto(user));

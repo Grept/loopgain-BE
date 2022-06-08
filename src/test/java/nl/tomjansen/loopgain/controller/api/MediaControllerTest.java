@@ -5,6 +5,7 @@ import nl.tomjansen.loopgain.dto.model.media.MediaDto;
 import nl.tomjansen.loopgain.service.media.MediaService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,8 @@ class MediaControllerTest {
     }
 
     @Test
-    void saveMedia() throws Exception {
+    @DisplayName("Testing MediaController.saveMedia(). Should return RE with message containing ID and status 201 CREATED.")
+    void saveMediaTest() throws Exception {
         // Mocking the multipart file (video / audio)
         MockMultipartFile file = new MockMultipartFile(
                 "file",
@@ -91,7 +93,8 @@ class MediaControllerTest {
     }
 
     @Test
-    void getMediaStream() throws Exception {
+    @DisplayName("Testing MediaController.getMediaStream(). Should return RE with mediastream, correct headers and status 200 OK.")
+    void getMediaStreamTest() throws Exception {
         Mockito.when(mediaService.getMedia(any())).thenReturn(mediaDto_1);
 
         mockMvc
@@ -105,7 +108,8 @@ class MediaControllerTest {
     }
 
     @Test
-    void getMediaData() throws Exception {
+    @DisplayName("Testing MediaController.getMediaData(). Should return RE with MediaDto and status 200 OK.")
+    void getMediaDataTest() throws Exception {
         Mockito.when(mediaService.getMedia(any())).thenReturn(mediaDto_1);
 
         mockMvc
@@ -116,7 +120,8 @@ class MediaControllerTest {
     }
 
     @Test
-    void getAllMediaData() throws Exception {
+    @DisplayName("Testing MediaController.getAllMediaData(). Should return RE with a list of MediaDto's and status 200 OK.")
+    void getAllMediaDataTest() throws Exception {
         // mediaService.getAllMediaInfo() produces mediaDto's without an inputStreamResource.
         mediaDto_1.setInputStreamResource(null);
         mediaDto_2.setInputStreamResource(null);
@@ -145,7 +150,8 @@ class MediaControllerTest {
     }
 
     @Test
-    void deleteMediaFile() throws Exception {
+    @DisplayName("Testing MediaController.deleteMediaFile(). Should return RE correct message and status 200 OK.")
+    void deleteMediaFileTest() throws Exception {
         Mockito.when(mediaService.deleteFile(any())).thenReturn(mediaDto_1);
 
         mockMvc

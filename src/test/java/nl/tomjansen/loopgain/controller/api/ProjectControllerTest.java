@@ -62,8 +62,8 @@ class ProjectControllerTest {
     }
 
     @Test
-    @DisplayName("Testing getAllProjects(). Should return a list of 2 ProjectDto's")
-    void getAllProjects() throws Exception {
+    @DisplayName("Testing ProjectController.getAllProjects(). Should return a list of 2 ProjectDto's")
+    void getAllProjectsTest() throws Exception {
         Mockito.when(projectService.getAllProjects()).thenReturn(Lists.newArrayList(projectDto_1, projectDto_2));
 
         mockMvc
@@ -85,8 +85,8 @@ class ProjectControllerTest {
     }
 
     @Test
-    @DisplayName("Testing getProject(). Should return a ProjectDto")
-    void getProject() throws Exception {
+    @DisplayName("Testing ProjectController.getProject(). Should return a ProjectDto")
+    void getProjectTest() throws Exception {
         Mockito.when(projectService.getProject(1L)).thenReturn(projectDto_1);
 
         mockMvc
@@ -103,8 +103,8 @@ class ProjectControllerTest {
     }
 
     @Test
-    @DisplayName("Testing createProject(). Should return String with Project ID.")
-    void createProject() throws Exception {
+    @DisplayName("Testing ProjectController.createProject(). Should return String with Project ID.")
+    void createProjectTest() throws Exception {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
@@ -123,8 +123,8 @@ class ProjectControllerTest {
     }
 
     @Test
-    @DisplayName("Testing deleteProject. Should return a string naming the deleted project")
-    void deleteProject() throws Exception {
+    @DisplayName("Testing ProjectController.deleteProject. Should return a string naming the deleted project")
+    void deleteProjectTest() throws Exception {
         Mockito.when(projectService.deleteProject(any())).thenReturn(projectDto_1);
 
         mockMvc

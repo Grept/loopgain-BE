@@ -9,6 +9,7 @@ import nl.tomjansen.loopgain.repository.media.MediaRepository;
 import nl.tomjansen.loopgain.repository.project.ProjectRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -69,7 +70,8 @@ class MediaServiceTest {
     }
 
     @Test
-    void saveMedia() throws IOException {
+    @DisplayName("Testing MediaService.saveMedia(). Should return a Long (mediaId)")
+    void saveMediaTest() throws IOException {
         String filename = "Media file 1";
         MockMultipartFile file = new MockMultipartFile(
                 "file",
@@ -97,7 +99,8 @@ class MediaServiceTest {
     }
 
     @Test
-    void getAllMediaInfo() {
+    @DisplayName("Testing MediaService.getAllMediaInfo(). Should return a list of MediaDto's")
+    void getAllMediaInfoTest() {
         Mockito
                 .when(mediaRepository.findAll())
                 .thenReturn(Lists.newArrayList(media_1, media_2));
